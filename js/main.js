@@ -114,6 +114,24 @@ var createPinElement = function (advert) {
   return template;
 };
 
+var fillAdvertFeatures = function (element, advert) {
+  var featuresElement = element.querySelector('.popup__features');
+  var featuresContent = '';
+  advert.offer.features.forEach(function (feature) {
+    featuresContent += '<li class="popup__feature popup__feature--' + feature + '"></li>';
+  });
+  featuresElement.innerHTML = featuresContent;
+};
+
+var fillAdvertPhotos = function (element, advert) {
+  var photosElement = element.querySelector('.popup__photos');
+  var photosContent = '';
+  advert.offer.photos.forEach(function (photo) {
+    photosContent += '<img src="' + photo + '" class="popup__photo" width="45" height="40" alt="' + advert.offer.title + '"></li>';
+  });
+  photosElement.innerHTML = photosContent;
+};
+
 var fillPinDescriptionElement = function (element, advert) {
   element.querySelector('.popup__avatar').src = advert.author.avatar;
   element.querySelector('.popup__title').textContent = advert.offer.title;
@@ -124,20 +142,8 @@ var fillPinDescriptionElement = function (element, advert) {
   element.querySelector('.popup__text--time').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
   element.querySelector('.popup__description ').textContent = advert.offer.description;
 
-  var featuresElement = element.querySelector('.popup__features');
-  var featuresContent = '';
-  advert.offer.features.forEach(function (feature) {
-    featuresContent += '<li class="popup__feature popup__feature--' + feature + '"></li>';
-  });
-  featuresElement.innerHTML = featuresContent;
-
-  var photosElement = element.querySelector('.popup__photos');
-  var photosContent = '';
-  advert.offer.photos.forEach(function (photo) {
-    photosContent += '<img src="' + photo + '" class="popup__photo" width="45" height="40" alt="' + advert.offer.title + '"></li>';
-  });
-  photosElement.innerHTML = photosContent;
-
+  fillAdvertFeatures(element, advert);
+  fillAdvertPhotos(element, advert);
 };
 
 var createPinDescriptionElement = function (advert) {
