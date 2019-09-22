@@ -36,7 +36,6 @@ var ADVERT_OFFER_PHOTOS = [
 ];
 
 var MAP_LOCATION_Y_MIN = 130;
-
 var MAP_LOCATION_Y_MAX = 630;
 
 var MAP_PIN_WIDTH = 50;
@@ -172,10 +171,9 @@ var createPinDescriptionElement = function (advert) {
 
 var mapContainer = document.querySelector('.map');
 var mapFiltersContainer = document.querySelector('.map .map__filters-container');
+var mapPinsContainer = document.querySelector('.map .map__pins');
 
 var mapWidth = mapContainer.clientWidth;
-
-var mapPinsContainer = document.querySelector('.map .map__pins');
 
 mapContainer.classList.remove('map--faded');
 
