@@ -44,6 +44,8 @@ var MAP_PIN_HEIGHT = 70;
 var ADVERT_AMOUNT = 8;
 var ADVERT_PRICE_MIN = 1000;
 var ADVERT_PRICE_MAX = 5000;
+var ADVERT_AVATAR_MIN = 1;
+var ADVERT_AVATAR_MAX = 8;
 
 var getRandomInt = function (max, min) {
   min = min ? min : 0;
@@ -69,7 +71,7 @@ var generateRandomAdvert = function (maxLocationX) {
   var locationX = getRandomInt(maxLocationX - 2 * MAP_PIN_WIDTH, MAP_PIN_WIDTH);
   var locationY = getRandomInt(MAP_LOCATION_Y_MAX, MAP_LOCATION_Y_MIN);
 
-  var avatarNumber = getRandomInt(8, 1);
+  var avatarNumber = getRandomInt(ADVERT_AVATAR_MAX, ADVERT_AVATAR_MIN);
 
   return {
     'author': {
