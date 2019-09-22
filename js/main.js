@@ -6,6 +6,7 @@ var ADVERT_OFFER_TYPE = [
   'house',
   'bungalo'
 ];
+
 var ADVERT_OFFER_TYPE_DESCRIPTION = {
   'palace': 'Дворец',
   'flat': 'Квартира',
@@ -42,9 +43,11 @@ var MAP_PIN_WIDTH = 50;
 var MAP_PIN_HEIGHT = 70;
 
 var ADVERT_AMOUNT = 8;
+
 var ADVERT_PRICE_MIN = 1000;
 var ADVERT_PRICE_MAX = 5000;
 var ADVERT_AVATAR_MIN = 1;
+
 var ADVERT_AVATAR_MAX = 8;
 
 var getRandomInt = function (max, min) {
@@ -103,7 +106,7 @@ var fillPinElement = function (element, advert) {
   pinImageElement.alt = advert.offer.title;
   pinImageElement.src = advert.author.avatar;
 
-  element.style.left = (advert.location.x + (MAP_PIN_WIDTH / 2)) + 'px';
+  element.style.left = (advert.location.x - (MAP_PIN_WIDTH / 2)) + 'px';
   element.style.top = (advert.location.y - MAP_PIN_HEIGHT) + 'px';
 };
 
