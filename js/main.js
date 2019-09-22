@@ -42,6 +42,8 @@ var MAP_PIN_WIDTH = 50;
 var MAP_PIN_HEIGHT = 70;
 
 var ADVERT_AMOUNT = 8;
+var ADVERT_PRICE_MIN = 1000;
+var ADVERT_PRICE_MAX = 5000;
 
 var getRandomInt = function (max, min) {
   min = min ? min : 0;
@@ -76,7 +78,7 @@ var generateRandomAdvert = function (maxLocationX) {
     'offer': {
       'title': 'заголовок предложения',
       'address': locationX + ', ' + locationY,
-      'price': getRandomInt(5000, 1000),
+      'price': getRandomInt(ADVERT_PRICE_MAX, ADVERT_PRICE_MIN),
       'type': getRandomElementArray(ADVERT_OFFER_TYPE),
       'rooms': getRandomInt(5, 1),
       'guests': getRandomInt(8, 1),
