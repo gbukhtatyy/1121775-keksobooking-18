@@ -46,9 +46,15 @@ var ADVERT_AMOUNT = 8;
 
 var ADVERT_PRICE_MIN = 1000;
 var ADVERT_PRICE_MAX = 5000;
-var ADVERT_AVATAR_MIN = 1;
 
+var ADVERT_AVATAR_MIN = 1;
 var ADVERT_AVATAR_MAX = 8;
+
+var ADVERT_ROOMS_MIN = 1;
+var ADVERT_ROOMS_MAX = 5;
+
+var ADVERT_GUESTS_MIN = 1;
+var ADVERT_GUESTS_MAX = 8;
 
 var getRandomInt = function (max, min) {
   min = min ? min : 0;
@@ -85,8 +91,8 @@ var generateRandomAdvert = function (maxLocationX) {
       'address': locationX + ', ' + locationY,
       'price': getRandomInt(ADVERT_PRICE_MAX, ADVERT_PRICE_MIN),
       'type': getRandomElementArray(ADVERT_OFFER_TYPE),
-      'rooms': getRandomInt(5, 1),
-      'guests': getRandomInt(8, 1),
+      'rooms': getRandomInt(ADVERT_ROOMS_MAX, ADVERT_ROOMS_MIN),
+      'guests': getRandomInt(ADVERT_GUESTS_MAX, ADVERT_GUESTS_MIN),
       'checkin': getRandomElementArray(ADVERT_OFFER_TIME),
       'checkout': getRandomElementArray(ADVERT_OFFER_TIME),
       'features': getRandomElementsArray(ADVERT_OFFER_FEATURES, getRandomInt(ADVERT_OFFER_FEATURES.length, 1)),
