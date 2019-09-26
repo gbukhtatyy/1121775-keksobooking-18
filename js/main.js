@@ -61,6 +61,11 @@ var ADVERT_GUESTS_MAX = 8;
 var mapContainer = document.querySelector('.map');
 var mapFiltersContainer = document.querySelector('.map .map__filters-container');
 var mapPinsContainer = document.querySelector('.map .map__pins');
+var mapPinMain = document.querySelector('.map__pin--main');
+
+var formAdElement = document.querySelector('.ad-form');
+var formMapFiltersElement = document.querySelector('.map__filters');
+
 var mapWidth = mapContainer.clientWidth;
 var adverts = [];
 
@@ -193,7 +198,7 @@ var showMapPins = function () {
   }
 
   mapPinsContainer.appendChild(fragmentPins);
-}
+};
 
 var showMapDescriptions = function () {
   var fragmentDescriptions = document.createDocumentFragment();
@@ -203,11 +208,55 @@ var showMapDescriptions = function () {
   }
 
   mapFiltersContainer.before(fragmentDescriptions);
-}
+};
+
+var changeDisabledFormElements = function (form, isDisabled) {
+  var fields = form.querySelectorAll('select, input, textarea, button');
+
+  fields.forEach(function (field) {
+    field.disabled = isDisabled;
+  });
+};
+
+var mousedownMapPinMainHandler = function () {
+  activationPage();
+};
+
+var keydownEnterMapPinMainHandler = function (evt) {
+  if (evt.keyCode === KEY_CODE_ENTER) {
+    activationPage();
+  }
+};
+
+var activationPage = function () {
+  mapPinMain.removeEventListener('mousedown', mousedownMapPinMainHandler);
+  mapPinMain.removeEventListener('keydown', keydownEnterMapPinMainHandler);
+
+  changeDisabledFormElements(formAdElement, false);
+  changeDisabledFormElements(formMapFiltersElement, false);
+
+  mapContainer.classList.remove('map--faded');
+
+  formAdElement.classList.remove('ad-form--disabled');
+};
+
+var deactivationPage = function () {
+  mapPinMain.addEventListener('mousedown', mousedownMapPinMainHandler);
+  mapPinMain.addEventListener('keydown', keydownEnterMapPinMainHandler);
+
+  changeDisabledFormElements(formAdElement, true);
+  changeDisabledFormElements(formMapFiltersElement, true);
+
+  mapContainer.classList.add('map--faded');
+
+  formAdElement.classList.add('ad-form--disabled');
+};
 
 // Активация карты
-mapContainer.classList.remove('map--faded');
+// mapContainer.classList.remove('map--faded');
 
-syncAdverts();
-showMapPins();
-showMapDescriptions();
+// syncAdverts();
+// showMapPins();
+// showMapDescriptions();
+
+deactivationPage();
