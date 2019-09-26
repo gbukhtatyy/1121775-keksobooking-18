@@ -58,6 +58,12 @@ var ADVERT_ROOMS_MAX = 5;
 var ADVERT_GUESTS_MIN = 1;
 var ADVERT_GUESTS_MAX = 8;
 
+var mapContainer = document.querySelector('.map');
+var mapFiltersContainer = document.querySelector('.map .map__filters-container');
+var mapPinsContainer = document.querySelector('.map .map__pins');
+var mapWidth = mapContainer.clientWidth;
+var adverts = [];
+
 var getRandomInt = function (max, min) {
   min = min ? min : 0;
 
@@ -172,24 +178,36 @@ var createPinDescriptionElement = function (advert) {
   return template;
 };
 
-var mapContainer = document.querySelector('.map');
-var mapFiltersContainer = document.querySelector('.map .map__filters-container');
-var mapPinsContainer = document.querySelector('.map .map__pins');
+var syncAdverts = function () {
+  adverts = [];
+  for (var i = 0; i < ADVERT_AMOUNT; i++) {
+    adverts.push(generateRandomAdvert(mapWidth));
+  }
+};
 
-var mapWidth = mapContainer.clientWidth;
+var showMapPins = function () {
+  var fragmentPins = document.createDocumentFragment();
 
-mapContainer.classList.remove('map--faded');
+  for (var i = 0; i < adverts.length; i++) {
+    fragmentPins.appendChild(createPinElement(adverts[i]));
+  }
 
-var fragmentPins = document.createDocumentFragment();
-var fragmentDescriptions = document.createDocumentFragment();
-
-for (var i = 0; i < ADVERT_AMOUNT; i++) {
-  var advert = generateRandomAdvert(mapWidth);
-
-  fragmentPins.appendChild(createPinElement(advert));
-
-  fragmentDescriptions.appendChild(createPinDescriptionElement(advert));
+  mapPinsContainer.appendChild(fragmentPins);
 }
 
-mapPinsContainer.appendChild(fragmentPins);
-mapFiltersContainer.before(fragmentDescriptions);
+var showMapDescriptions = function () {
+  var fragmentDescriptions = document.createDocumentFragment();
+
+  for (var i = 0; i < adverts.length; i++) {
+    fragmentDescriptions.appendChild(createPinDescriptionElement(adverts[i]));
+  }
+
+  mapFiltersContainer.before(fragmentDescriptions);
+}
+
+// Активация карты
+mapContainer.classList.remove('map--faded');
+
+syncAdverts();
+showMapPins();
+showMapDescriptions();
