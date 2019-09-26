@@ -1,5 +1,8 @@
 'use strict';
 
+var KEY_CODE_ESC = 27;
+var KEY_CODE_ENTER = 13;
+
 var ADVERT_OFFER_TYPE = [
   'palace',
   'flat',
