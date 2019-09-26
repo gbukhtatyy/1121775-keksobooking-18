@@ -224,8 +224,8 @@ var changeDisabledFormElements = function (form, isDisabled) {
 };
 
 var getCoordinatesPinMain = function () {
-  var x = mapPinMain.style.left.slice(0, -2) * 1 + MAP_PIN_MAIN_WIDTH / 2;
-  var y = mapPinMain.style.top.slice(0, -2) * 1 + MAP_PIN_MAIN_HEIGHT;
+  var x = Math.floor(mapPinMain.style.left.slice(0, -2) * 1 + MAP_PIN_MAIN_WIDTH / 2);
+  var y = Math.floor(mapPinMain.style.top.slice(0, -2) * 1 + MAP_PIN_MAIN_HEIGHT);
   return {
     x,
     y
