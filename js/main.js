@@ -236,10 +236,10 @@ var getCoordinatesPinMain = function () {
   var x = Math.floor(mapPinMain.style.left.slice(0, -2) * 1 + MAP_PIN_MAIN_WIDTH / 2);
   var y = Math.floor(mapPinMain.style.top.slice(0, -2) * 1 + MAP_PIN_MAIN_HEIGHT);
   return {
-    x,
-    y
+    x: x,
+    y: y
   };
-}
+};
 
 var mousedownMapPinMainHandler = function () {
   activationPage();
@@ -255,7 +255,7 @@ var fillAddressField = function () {
   var coordinates = getCoordinatesPinMain();
 
   fieldAddressElement.value = coordinates.x + ', ' + coordinates.y;
-}
+};
 
 var activationPage = function () {
   mapPinMain.removeEventListener('mousedown', mousedownMapPinMainHandler);
@@ -282,20 +282,20 @@ var deactivationPage = function () {
   formAdElement.classList.add('ad-form--disabled');
 };
 
-var validateCapacityField = function(){
+var validateCapacityField = function () {
   var roomNumber = fieldRoomNumberElement.value;
-  var capacity = fieldCapacityElement.value*1;
+  var capacity = fieldCapacityElement.value * 1;
   var availableValues = ROOM_GUEST_RELATION[roomNumber];
   var message = availableValues.includes(capacity) ? '' : 'Количество гостей не влезут в выбранную комнату';
 
   fieldCapacityElement.setCustomValidity(message);
-}
+};
 
-fieldRoomNumberElement.addEventListener('change',function(){
+fieldRoomNumberElement.addEventListener('change', function () {
   validateCapacityField();
 });
 
-fieldCapacityElement.addEventListener('change',function(){
+fieldCapacityElement.addEventListener('change', function () {
   validateCapacityField();
 });
 
