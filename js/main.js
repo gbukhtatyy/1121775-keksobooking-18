@@ -291,11 +291,11 @@ var validateCapacityField = function(){
   fieldCapacityElement.setCustomValidity(message);
 }
 
-fieldRoomNumberElement.addEventListener('input',function(){
+fieldRoomNumberElement.addEventListener('change',function(){
   validateCapacityField();
 });
 
-fieldCapacityElement.addEventListener('input',function(){
+fieldCapacityElement.addEventListener('change',function(){
   validateCapacityField();
 });
 
