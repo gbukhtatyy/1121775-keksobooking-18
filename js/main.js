@@ -61,6 +61,13 @@ var ADVERT_ROOMS_MAX = 5;
 var ADVERT_GUESTS_MIN = 1;
 var ADVERT_GUESTS_MAX = 8;
 
+var ROOM_GUEST_RELATION = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0]
+};
+
 var mapContainer = document.querySelector('.map');
 var mapFiltersContainer = document.querySelector('.map .map__filters-container');
 var mapPinsContainer = document.querySelector('.map .map__pins');
@@ -70,6 +77,8 @@ var formAdElement = document.querySelector('.ad-form');
 var formMapFiltersElement = document.querySelector('.map__filters');
 
 var fieldAddressElement = document.querySelector('#address');
+var fieldCapacityElement = document.querySelector('#capacity');
+var fieldRoomNumberElement = document.querySelector('#room_number');
 
 var mapWidth = mapContainer.clientWidth;
 var adverts = [];
@@ -259,6 +268,7 @@ var activationPage = function () {
   formAdElement.classList.remove('ad-form--disabled');
 
   fillAddressField();
+  validateCapacityField();
 };
 
 var deactivationPage = function () {
@@ -272,11 +282,21 @@ var deactivationPage = function () {
   formAdElement.classList.add('ad-form--disabled');
 };
 
-// Активация карты
-// mapContainer.classList.remove('map--faded');
+var validateCapacityField = function(){
+  var roomNumber = fieldRoomNumberElement.value;
+  var capacity = fieldCapacityElement.value*1;
+  var availableValues = ROOM_GUEST_RELATION[roomNumber];
+  var message = availableValues.includes(capacity) ? '' : 'Количество гостей не влезут в выбранную комнату';
 
-// syncAdverts();
-// showMapPins();
-// showMapDescriptions();
+  fieldCapacityElement.setCustomValidity(message);
+}
+
+fieldRoomNumberElement.addEventListener('input',function(){
+  validateCapacityField();
+});
+
+fieldCapacityElement.addEventListener('input',function(){
+  validateCapacityField();
+});
 
 deactivationPage();
