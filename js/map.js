@@ -6,8 +6,8 @@
 
   window.map = {
     getCoordinatesPinMain: function () {
-      var x = Math.floor(mapPinMain.style.left.slice(0, -2) * 1 + window.data.MAP_PIN_MAIN_WIDTH / 2);
-      var y = Math.floor(mapPinMain.style.top.slice(0, -2) * 1 + window.data.MAP_PIN_MAIN_HEIGHT);
+      var x = Math.floor(parseInt(mapPinMain.style.left, 10) + window.data.MAP_PIN_MAIN_WIDTH / 2);
+      var y = Math.floor(parseInt(mapPinMain.style.top, 10) + window.data.MAP_PIN_MAIN_HEIGHT);
       return {
         x: x,
         y: y
