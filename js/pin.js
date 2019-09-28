@@ -27,8 +27,10 @@
      * @param {Object} advert объект объявления
      * @return {Object} разметка маркера объявления
      */
-    createElement: function (advert) {
+    createElement: function (advert, index) {
       var template = templatePin.cloneNode(true);
+
+      template.setAttribute('data-id', index);
 
       fillElement(template, advert);
 

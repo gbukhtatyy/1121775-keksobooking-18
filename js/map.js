@@ -1,9 +1,54 @@
 'use strict';
 
 (function () {
+  var mapContainer = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapPinsContainer = document.querySelector('.map .map__pins');
   var mapFiltersContainer = document.querySelector('.map .map__filters-container');
+
+  var removeCards = function () {
+    var cards = mapContainer.querySelectorAll('.map__card');
+    cards.forEach(function (card) {
+      card.remove();
+    });
+  };
+
+  mapContainer.addEventListener('keydown', function (evt) {
+    window.util.isEscEvent(evt, removeCards);
+  });
+
+  var showPinDescription = function (advert) {
+    removeCards();
+
+    var card = window.card.createElement(advert);
+
+    card.querySelector('.popup__close').addEventListener('click', function () {
+      card.remove();
+    });
+
+    mapFiltersContainer.before(card);
+  };
+
+  mapPinsContainer.addEventListener('click', function (evt) {
+    var button = evt.target;
+
+    if (button.tagName !== 'button') {
+      button = button.closest('button');
+    }
+
+    if (button === null) {
+      return;
+    }
+
+    if (button.classList.contains('map__pin--main')) {
+      return;
+    }
+
+    var idAdvert = button.getAttribute('data-id');
+    var advert = window.data.adverts[idAdvert];
+
+    showPinDescription(advert);
+  });
 
   window.map = {
     /**
@@ -27,7 +72,7 @@
       var fragmentPins = document.createDocumentFragment();
 
       for (var i = 0; i < adverts.length; i++) {
-        fragmentPins.appendChild(window.pin.createElement(adverts[i]));
+        fragmentPins.appendChild(window.pin.createElement(adverts[i], i));
       }
 
       mapPinsContainer.appendChild(fragmentPins);
@@ -37,7 +82,7 @@
      * Отображение карточек объявлений на карте
      * @param {Array} adverts массив объявлений для отображения
      */
-    showMapDescriptions: function (adverts) {
+    showMapDescription: function (adverts) {
       var fragmentDescriptions = document.createDocumentFragment();
 
       for (var i = 0; i < adverts.length; i++) {

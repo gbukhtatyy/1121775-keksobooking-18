@@ -104,6 +104,8 @@
     ADVERT_GUESTS_MIN: ADVERT_GUESTS_MIN,
     ADVERT_GUESTS_MAX: ADVERT_GUESTS_MAX,
 
+    adverts:[],
+
     generateRandomAdvert: function (maxLocationX) {
       var locationX = window.util.getRandomInt(maxLocationX - 2 * MAP_PIN_WIDTH, MAP_PIN_WIDTH);
       var locationY = window.util.getRandomInt(MAP_LOCATION_Y_MAX, MAP_LOCATION_Y_MIN);
@@ -135,11 +137,13 @@
     },
 
     syncAdverts: function (mapWidth) {
-      var adverts = [];
+      this.adverts = [];
+
       for (var i = 0; i < ADVERT_AMOUNT; i++) {
-        adverts.push(this.generateRandomAdvert(mapWidth));
+        this.adverts.push(this.generateRandomAdvert(mapWidth));
       }
-      return adverts;
+
+      return this.adverts;
     }
   };
 })();
