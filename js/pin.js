@@ -1,10 +1,16 @@
 'use strict';
 
 (function () {
-  var templatePin = document.querySelector('#pin')
-    .content
-    .querySelector('.map__pin');
+  /**
+   * Шаблон отображения маркера объявления
+   */
+  var templatePin = document.querySelector('#pin').content.querySelector('.map__pin');
 
+  /**
+   * Заполение шаблона маркера объявления данными
+   * @param {Object} element элемент разметки
+   * @param {Object} advert объект объявления
+   */
   var fillElement = function (element, advert) {
     var pinImageElement = element.querySelector('img');
 
@@ -15,15 +21,18 @@
     element.style.top = (advert.location.y - window.data.MAP_PIN_HEIGHT) + 'px';
   };
 
-  var createElement = function (advert) {
-    var template = templatePin.cloneNode(true);
-
-    fillElement(template, advert);
-
-    return template;
-  };
-
   window.pin = {
-    createElement: createElement
+    /**
+     * Создание разметки маркера объявления для отображения на карте
+     * @param {Object} advert объект объявления
+     * @return {Object} разметка маркера объявления
+     */
+    createElement: function (advert) {
+      var template = templatePin.cloneNode(true);
+
+      fillElement(template, advert);
+
+      return template;
+    }
   };
 })();
