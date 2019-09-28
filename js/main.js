@@ -8,8 +8,6 @@ var mapPinMain = document.querySelector('.map__pin--main');
 var formAdElement = document.querySelector('.ad-form');
 var formMapFiltersElement = document.querySelector('.map__filters');
 
-var fieldAddressElement = document.querySelector('#address');
-
 var mapWidth = mapContainer.clientWidth;
 var adverts = window.data.syncAdverts(mapWidth);
 
@@ -97,14 +95,6 @@ var showMapDescriptions = function () {
   mapFiltersContainer.before(fragmentDescriptions);
 };
 
-var changeDisabledFormElements = function (form, isDisabled) {
-  var fields = form.querySelectorAll('select, input, textarea, button');
-
-  fields.forEach(function (field) {
-    field.disabled = isDisabled;
-  });
-};
-
 var mousedownMapPinMainHandler = function () {
   activationPage();
 };
@@ -113,23 +103,17 @@ var keydownEnterMapPinMainHandler = function (evt) {
   window.util.isEnterEvent(evt, activationPage);
 };
 
-var fillAddressField = function () {
-  var coordinates = window.map.getCoordinatesPinMain();
-
-  fieldAddressElement.value = coordinates.x + ', ' + coordinates.y;
-};
-
 var activationPage = function () {
   mapPinMain.removeEventListener('mousedown', mousedownMapPinMainHandler);
   mapPinMain.removeEventListener('keydown', keydownEnterMapPinMainHandler);
 
-  changeDisabledFormElements(formAdElement, false);
-  changeDisabledFormElements(formMapFiltersElement, false);
+  window.form.changeDisabledFormElements(formAdElement, false);
+  window.form.changeDisabledFormElements(formMapFiltersElement, false);
 
   mapContainer.classList.remove('map--faded');
   formAdElement.classList.remove('ad-form--disabled');
 
-  fillAddressField();
+  window.form.fillAddressField();
   showMapPins();
 };
 
@@ -137,8 +121,8 @@ var deactivationPage = function () {
   mapPinMain.addEventListener('mousedown', mousedownMapPinMainHandler);
   mapPinMain.addEventListener('keydown', keydownEnterMapPinMainHandler);
 
-  changeDisabledFormElements(formAdElement, true);
-  changeDisabledFormElements(formMapFiltersElement, true);
+  window.form.changeDisabledFormElements(formAdElement, true);
+  window.form.changeDisabledFormElements(formMapFiltersElement, true);
 
   mapContainer.classList.add('map--faded');
   formAdElement.classList.add('ad-form--disabled');

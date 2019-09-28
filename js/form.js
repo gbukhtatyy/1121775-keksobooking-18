@@ -10,6 +10,7 @@
 
   var fieldCapacityElement = document.querySelector('#capacity');
   var fieldRoomNumberElement = document.querySelector('#room_number');
+  var fieldAddressElement = document.querySelector('#address');
 
   var validateCapacityField = function () {
     var roomNumber = fieldRoomNumberElement.value;
@@ -20,13 +21,23 @@
     fieldCapacityElement.setCustomValidity(message);
   };
 
-  fieldRoomNumberElement.addEventListener('change', function () {
-    validateCapacityField();
-  });
-
-  fieldCapacityElement.addEventListener('change', function () {
-    validateCapacityField();
-  });
+  fieldRoomNumberElement.addEventListener('change', validateCapacityField);
+  fieldCapacityElement.addEventListener('change', validateCapacityField);
 
   validateCapacityField();
+
+  window.form = {
+    changeDisabledFormElements: function (form, isDisabled) {
+      var fields = form.querySelectorAll('select, input, textarea, button');
+
+      fields.forEach(function (field) {
+        field.disabled = isDisabled;
+      });
+    },
+    fillAddressField: function () {
+      var coordinates = window.map.getCoordinatesPinMain();
+
+      fieldAddressElement.value = coordinates.x + ', ' + coordinates.y;
+    }
+  };
 })();
