@@ -1,8 +1,5 @@
 'use strict';
 
-var KEY_CODE_ESC = 27;
-var KEY_CODE_ENTER = 13;
-
 var ADVERT_OFFER_TYPE = [
   'palace',
   'flat',
@@ -61,12 +58,6 @@ var ADVERT_ROOMS_MAX = 5;
 var ADVERT_GUESTS_MIN = 1;
 var ADVERT_GUESTS_MAX = 8;
 
-var ROOM_GUEST_RELATION = {
-  1: [1],
-  2: [1, 2],
-  3: [1, 2, 3],
-  100: [0]
-};
 
 var mapContainer = document.querySelector('.map');
 var mapFiltersContainer = document.querySelector('.map .map__filters-container');
@@ -77,37 +68,15 @@ var formAdElement = document.querySelector('.ad-form');
 var formMapFiltersElement = document.querySelector('.map__filters');
 
 var fieldAddressElement = document.querySelector('#address');
-var fieldCapacityElement = document.querySelector('#capacity');
-var fieldRoomNumberElement = document.querySelector('#room_number');
 
 var mapWidth = mapContainer.clientWidth;
 var adverts = [];
 
-var getRandomInt = function (max, min) {
-  min = min ? min : 0;
-
-  return Math.floor(Math.random() * Math.floor(max - min)) + min;
-};
-
-var getRandomElementArray = function (array) {
-  return array[getRandomInt(array.length)];
-};
-
-var shuffleArray = function (array) {
-  return array.slice(0).sort(function () {
-    return Math.random() - 0.5;
-  });
-};
-
-var getRandomElementsArray = function (array, amount) {
-  return shuffleArray(array).slice(0, amount);
-};
-
 var generateRandomAdvert = function (maxLocationX) {
-  var locationX = getRandomInt(maxLocationX - 2 * MAP_PIN_WIDTH, MAP_PIN_WIDTH);
-  var locationY = getRandomInt(MAP_LOCATION_Y_MAX, MAP_LOCATION_Y_MIN);
+  var locationX = window.util.getRandomInt(maxLocationX - 2 * MAP_PIN_WIDTH, MAP_PIN_WIDTH);
+  var locationY = window.util.getRandomInt(MAP_LOCATION_Y_MAX, MAP_LOCATION_Y_MIN);
 
-  var avatarNumber = getRandomInt(ADVERT_AVATAR_MAX, ADVERT_AVATAR_MIN);
+  var avatarNumber = window.util.getRandomInt(ADVERT_AVATAR_MAX, ADVERT_AVATAR_MIN);
 
   return {
     'author': {
@@ -116,15 +85,15 @@ var generateRandomAdvert = function (maxLocationX) {
     'offer': {
       'title': 'заголовок предложения',
       'address': locationX + ', ' + locationY,
-      'price': getRandomInt(ADVERT_PRICE_MAX, ADVERT_PRICE_MIN),
-      'type': getRandomElementArray(ADVERT_OFFER_TYPE),
-      'rooms': getRandomInt(ADVERT_ROOMS_MAX, ADVERT_ROOMS_MIN),
-      'guests': getRandomInt(ADVERT_GUESTS_MAX, ADVERT_GUESTS_MIN),
-      'checkin': getRandomElementArray(ADVERT_OFFER_TIME),
-      'checkout': getRandomElementArray(ADVERT_OFFER_TIME),
-      'features': getRandomElementsArray(ADVERT_OFFER_FEATURES, getRandomInt(ADVERT_OFFER_FEATURES.length, 1)),
+      'price': window.util.getRandomInt(ADVERT_PRICE_MAX, ADVERT_PRICE_MIN),
+      'type': window.util.getRandomElementArray(ADVERT_OFFER_TYPE),
+      'rooms': window.util.getRandomInt(ADVERT_ROOMS_MAX, ADVERT_ROOMS_MIN),
+      'guests': window.util.getRandomInt(ADVERT_GUESTS_MAX, ADVERT_GUESTS_MIN),
+      'checkin': window.util.getRandomElementArray(ADVERT_OFFER_TIME),
+      'checkout': window.util.getRandomElementArray(ADVERT_OFFER_TIME),
+      'features': window.util.getRandomElementsArray(ADVERT_OFFER_FEATURES, window.util.getRandomInt(ADVERT_OFFER_FEATURES.length, 1)),
       'description': 'строка с описанием',
-      'photos': getRandomElementsArray(ADVERT_OFFER_PHOTOS, getRandomInt(ADVERT_OFFER_PHOTOS.length, 1)),
+      'photos': window.util.getRandomElementsArray(ADVERT_OFFER_PHOTOS, window.util.getRandomInt(ADVERT_OFFER_PHOTOS.length, 1)),
     },
     'location': {
       'x': locationX,
@@ -246,9 +215,7 @@ var mousedownMapPinMainHandler = function () {
 };
 
 var keydownEnterMapPinMainHandler = function (evt) {
-  if (evt.keyCode === KEY_CODE_ENTER) {
-    activationPage();
-  }
+  window.util.isEnterEvent(evt, activationPage);
 };
 
 var fillAddressField = function () {
@@ -268,7 +235,7 @@ var activationPage = function () {
   formAdElement.classList.remove('ad-form--disabled');
 
   fillAddressField();
-  validateCapacityField();
+  showMapPins();
 };
 
 var deactivationPage = function () {
@@ -282,21 +249,5 @@ var deactivationPage = function () {
   formAdElement.classList.add('ad-form--disabled');
 };
 
-var validateCapacityField = function () {
-  var roomNumber = fieldRoomNumberElement.value;
-  var capacity = fieldCapacityElement.value * 1;
-  var availableValues = ROOM_GUEST_RELATION[roomNumber];
-  var message = availableValues.includes(capacity) ? '' : 'Количество гостей не влезут в выбранную комнату';
-
-  fieldCapacityElement.setCustomValidity(message);
-};
-
-fieldRoomNumberElement.addEventListener('change', function () {
-  validateCapacityField();
-});
-
-fieldCapacityElement.addEventListener('change', function () {
-  validateCapacityField();
-});
-
+syncAdverts();
 deactivationPage();
