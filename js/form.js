@@ -11,6 +11,8 @@
   var fieldCapacityElement = document.querySelector('#capacity');
   var fieldRoomNumberElement = document.querySelector('#room_number');
   var fieldAddressElement = document.querySelector('#address');
+  var fieldTimeIn = document.querySelector('#timein');
+  var fieldTimeOut = document.querySelector('#timeout');
 
   var validateCapacityField = function () {
     var roomNumber = fieldRoomNumberElement.value;
@@ -21,8 +23,19 @@
     fieldCapacityElement.setCustomValidity(message);
   };
 
+  var validateTimeFields = function (evt) {
+    if (fieldTimeIn === evt.target) {
+      fieldTimeOut.value = fieldTimeIn.value;
+    } else {
+      fieldTimeIn.value = fieldTimeOut.value;
+    }
+  };
+
   fieldRoomNumberElement.addEventListener('change', validateCapacityField);
   fieldCapacityElement.addEventListener('change', validateCapacityField);
+
+  fieldTimeIn.addEventListener('change', validateTimeFields);
+  fieldTimeOut.addEventListener('change', validateTimeFields);
 
   validateCapacityField();
 
