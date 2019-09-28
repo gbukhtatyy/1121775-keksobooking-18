@@ -104,7 +104,7 @@
     ADVERT_GUESTS_MIN: ADVERT_GUESTS_MIN,
     ADVERT_GUESTS_MAX: ADVERT_GUESTS_MAX,
 
-    adverts:[],
+    adverts: [],
 
     generateRandomAdvert: function (maxLocationX) {
       var locationX = window.util.getRandomInt(maxLocationX - 2 * MAP_PIN_WIDTH, MAP_PIN_WIDTH);

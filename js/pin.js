@@ -25,6 +25,7 @@
     /**
      * Создание разметки маркера объявления для отображения на карте
      * @param {Object} advert объект объявления
+     * @param {Number} index идентификатор объявления
      * @return {Object} разметка маркера объявления
      */
     createElement: function (advert, index) {
