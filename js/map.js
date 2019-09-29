@@ -16,9 +16,6 @@
     window.util.isEscEvent(evt, removeCards);
   };
 
-  /**
-   * Закрытие карточек с описанием объявления
-   */
   var removeCards = function () {
     mapContainer.removeEventListener('keydown', mapEscPressHandler);
 
@@ -62,6 +59,19 @@
   });
 
   window.map = {
+    getMapBounds: function () {
+      return {
+        x: {
+          min: 0,
+          max: parseInt(mapContainer.clientWidth, 10) - window.data.MAP_PIN_MAIN_WIDTH
+        },
+        y: {
+          min: window.data.MAP_LOCATION_Y_MIN,
+          max: window.data.MAP_LOCATION_Y_MAX
+        }
+      };
+    },
+
     /**
      * Получение координат маркера для получения адреса
      * @return {Object} объект с координатами x и y
@@ -90,6 +100,8 @@
     },
 
     removePins: function () {
+      removeCards();
+
       var pins = mapPinsContainer.querySelectorAll('.map__pin');
 
       pins.forEach(function (pin) {

@@ -72,6 +72,9 @@
       var coordinates = window.map.getCoordinatesPinMain();
 
       fieldAddressElement.value = coordinates.x + ', ' + coordinates.y;
+    },
+    clear: function () {
+      fieldAddressElement.value = '';
     }
   };
 })();
