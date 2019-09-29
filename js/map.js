@@ -93,7 +93,7 @@
         if (pin.classList.contains('map__pin--main') === false) {
           pin.remove();
         }
-      })
+      });
     }
   };
 })();
