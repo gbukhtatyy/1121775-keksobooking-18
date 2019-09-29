@@ -50,6 +50,7 @@ var deactivationPage = function () {
 
   window.map.removePins();
   window.form.clear();
+  window.form.fillAddressField();
 };
 
 formResetElement.addEventListener('click', function () {

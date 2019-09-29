@@ -15,6 +15,7 @@
     'palace': 10000
   };
 
+  var fieldTitleElement = document.querySelector('#title');
   var fieldCapacityElement = document.querySelector('#capacity');
   var fieldRoomNumberElement = document.querySelector('#room_number');
   var fieldAddressElement = document.querySelector('#address');
@@ -74,6 +75,7 @@
       fieldAddressElement.value = coordinates.x + ', ' + coordinates.y;
     },
     clear: function () {
+      fieldTitleElement.value = '';
       fieldAddressElement.value = '';
     }
   };

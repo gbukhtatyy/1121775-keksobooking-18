@@ -9,11 +9,15 @@
   var clickCloseCardHandler = function (card) {
     return function () {
       card.remove();
+      removeActivePin();
     };
   };
 
   var mapEscPressHandler = function (evt) {
-    window.util.isEscEvent(evt, removeCards);
+    window.util.isEscEvent(evt, function () {
+      removeCards();
+      removeActivePin();
+    });
   };
 
   var removeCards = function () {
@@ -37,6 +41,14 @@
     mapFiltersContainer.before(card);
   };
 
+  var removeActivePin = function () {
+    var pin = mapPinsContainer.querySelector('.map__pin--active');
+
+    if (pin) {
+      pin.classList.remove('map__pin--active');
+    }
+  };
+
   mapPinsContainer.addEventListener('click', function (evt) {
     var button = evt.target;
 
@@ -54,6 +66,10 @@
 
     var idAdvert = button.getAttribute('data-id');
     var advert = window.data.adverts[idAdvert];
+
+    removeActivePin();
+
+    button.classList.add('map__pin--active');
 
     showPinDescription(advert);
   });
@@ -77,8 +93,19 @@
      * @return {Object} объект с координатами x и y
      */
     getCoordinatesPinMain: function () {
-      var x = Math.floor(parseInt(mapPinMain.style.left, 10) + window.data.MAP_PIN_MAIN_WIDTH / 2);
-      var y = Math.floor(parseInt(mapPinMain.style.top, 10) + window.data.MAP_PIN_MAIN_HEIGHT);
+      var x = Math.floor(parseInt(mapPinMain.style.left, 10));
+      var y = Math.floor(parseInt(mapPinMain.style.top, 10));
+
+      if (mapContainer.classList.contains('map--faded')) {
+        // Метка адреса круглая берется центр
+        x += Math.floor(window.data.MAP_PIN_MAIN_WIDTH / 2);
+        y += Math.floor((window.data.MAP_PIN_MAIN_ROUND_HEIGHT) / 2);
+      } else {
+        // Метка адреса не круглая берется точка на которую указывает маркер
+        x += Math.floor(window.data.MAP_PIN_MAIN_WIDTH / 2);
+        y += Math.floor(window.data.MAP_PIN_MAIN_HEIGHT);
+      }
+
       return {
         x: x,
         y: y
