@@ -6,25 +6,33 @@
   var mapPinsContainer = document.querySelector('.map .map__pins');
   var mapFiltersContainer = document.querySelector('.map .map__filters-container');
 
+  var clickCloseCardHandler = function (card) {
+    return function () {
+      card.remove();
+    };
+  };
+
+  var mapEscPressHandler = function (evt) {
+    window.util.isEscEvent(evt, removeCards);
+  };
+
   var removeCards = function () {
+    mapContainer.removeEventListener('keydown', mapEscPressHandler);
+
     var cards = mapContainer.querySelectorAll('.map__card');
     cards.forEach(function (card) {
+      card.querySelector('.popup__close').removeEventListener('click', clickCloseCardHandler(card));
       card.remove();
     });
   };
-
-  mapContainer.addEventListener('keydown', function (evt) {
-    window.util.isEscEvent(evt, removeCards);
-  });
 
   var showPinDescription = function (advert) {
     removeCards();
 
     var card = window.card.createElement(advert);
 
-    card.querySelector('.popup__close').addEventListener('click', function () {
-      card.remove();
-    });
+    mapContainer.addEventListener('keydown', mapEscPressHandler);
+    card.querySelector('.popup__close').addEventListener('click', clickCloseCardHandler(card));
 
     mapFiltersContainer.before(card);
   };
@@ -76,20 +84,6 @@
       }
 
       mapPinsContainer.appendChild(fragmentPins);
-    },
-
-    /**
-     * Отображение карточек объявлений на карте
-     * @param {Array} adverts массив объявлений для отображения
-     */
-    showMapDescription: function (adverts) {
-      var fragmentDescriptions = document.createDocumentFragment();
-
-      for (var i = 0; i < adverts.length; i++) {
-        fragmentDescriptions.appendChild(window.card.createElement(adverts[i]));
-      }
-
-      mapFiltersContainer.before(fragmentDescriptions);
     }
   };
 })();
