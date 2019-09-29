@@ -16,6 +16,9 @@
     window.util.isEscEvent(evt, removeCards);
   };
 
+  /**
+   * Закрытие карточек с описанием объявления
+   */
   var removeCards = function () {
     mapContainer.removeEventListener('keydown', mapEscPressHandler);
 
