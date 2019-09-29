@@ -5,6 +5,7 @@ var mapPinMain = document.querySelector('.map__pin--main');
 
 var formAdElement = document.querySelector('.ad-form');
 var formMapFiltersElement = document.querySelector('.map__filters');
+var formResetElement = document.querySelector('.ad-form__reset');
 
 var mapWidth = mapContainer.clientWidth;
 var adverts = window.data.syncAdverts(mapWidth);
@@ -40,6 +41,12 @@ var deactivationPage = function () {
 
   mapContainer.classList.add('map--faded');
   formAdElement.classList.add('ad-form--disabled');
+
+  window.map.removePins();
 };
+
+formResetElement.addEventListener('click', function () {
+  deactivationPage();
+});
 
 deactivationPage();

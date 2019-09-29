@@ -84,6 +84,16 @@
       }
 
       mapPinsContainer.appendChild(fragmentPins);
+    },
+
+    removePins: function () {
+      var pins = mapPinsContainer.querySelectorAll('.map__pin');
+
+      pins.forEach(function (pin) {
+        if (pin.classList.contains('map__pin--main') === false) {
+          pin.remove();
+        }
+      })
     }
   };
 })();
