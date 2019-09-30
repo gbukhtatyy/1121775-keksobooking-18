@@ -21,7 +21,7 @@
   };
 
   var removeCards = function () {
-    mapContainer.removeEventListener('keydown', mapEscPressHandler);
+    document.removeEventListener('keydown', mapEscPressHandler);
 
     var cards = mapContainer.querySelectorAll('.map__card');
     cards.forEach(function (card) {
@@ -35,7 +35,7 @@
 
     var card = window.card.createElement(advert);
 
-    mapContainer.addEventListener('keydown', mapEscPressHandler);
+    document.addEventListener('keydown', mapEscPressHandler);
     card.querySelector('.popup__close').addEventListener('click', clickCloseCardHandler(card));
 
     mapFiltersContainer.before(card);
