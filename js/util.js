@@ -5,14 +5,6 @@
   var KEY_CODE_ESC = 27;
   var KEY_CODE_ENTER = 13;
 
-  var elementMoveOn = function () {
-
-  };
-
-  var elementMoveOff = function () {
-
-  };
-
   window.util = {
     /**
      * Выполение функции при нажатой клавиши ESC

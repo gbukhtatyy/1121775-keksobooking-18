@@ -66,11 +66,11 @@
   window.form = {
     /**
      * Включение/выключение элементов формы
-     * @param {Object} form Объект формы в DOM
+     * @param {Object} element Объект формы в DOM
      * @param {Boolean} isDisabled True или false для выставления в disabled
      */
-    changeDisabledFormElements: function (form, isDisabled) {
-      var fields = form.querySelectorAll('select, input, textarea, button');
+    changeDisabledFormElements: function (element, isDisabled) {
+      var fields = element.querySelectorAll('select, input, textarea, button');
 
       fields.forEach(function (field) {
         field.disabled = isDisabled;

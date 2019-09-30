@@ -7,7 +7,6 @@ var startMapPinMainTop = mapPinMain.style.top;
 var startMapPinMainLeft = mapPinMain.style.left;
 
 var formAdElement = document.querySelector('.ad-form');
-var formMapFiltersElement = document.querySelector('.map__filters');
 var formResetElement = document.querySelector('.ad-form__reset');
 
 var mapWidth = mapContainer.clientWidth;
