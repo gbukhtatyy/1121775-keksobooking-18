@@ -78,8 +78,8 @@
     getMapBounds: function () {
       return {
         x: {
-          min: 0,
-          max: parseInt(mapContainer.clientWidth, 10) - window.data.MAP_PIN_MAIN_WIDTH
+          min: -(window.data.MAP_PIN_MAIN_WIDTH / 2),
+          max: parseInt(mapContainer.clientWidth, 10) - (window.data.MAP_PIN_MAIN_WIDTH / 2)
         },
         y: {
           min: window.data.MAP_LOCATION_Y_MIN,
