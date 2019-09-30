@@ -15,6 +15,8 @@
     'palace': 10000
   };
 
+  var form = document.querySelector('.ad-form');
+
   var fieldTitleElement = document.querySelector('#title');
   var fieldCapacityElement = document.querySelector('#capacity');
   var fieldRoomNumberElement = document.querySelector('#room_number');
@@ -62,6 +64,11 @@
   validatePriceField();
 
   window.form = {
+    /**
+     * Включение/выключение элементов формы
+     * @param {Object} form Объект формы в DOM
+     * @param {Boolean} isDisabled True или false для выставления в disabled
+     */
     changeDisabledFormElements: function (form, isDisabled) {
       var fields = form.querySelectorAll('select, input, textarea, button');
 
@@ -69,11 +76,33 @@
         field.disabled = isDisabled;
       });
     },
+
     fillAddressField: function () {
       var coordinates = window.map.getCoordinatesPinMain();
 
       fieldAddressElement.value = coordinates.x + ', ' + coordinates.y;
     },
+
+    /**
+     * Активация элементов формы фильтра на карте
+     */
+    active: function () {
+      form.classList.remove('ad-form--disabled');
+
+      this.changeDisabledFormElements(form, false);
+    },
+
+    /**
+     * Диактивация элементов формы фильтра на карте
+     */
+    deactive: function () {
+      this.clear();
+
+      this.changeDisabledFormElements(form, true);
+
+      form.classList.add('ad-form--disabled');
+    },
+
     clear: function () {
       fieldTitleElement.value = '';
       fieldAddressElement.value = '';
