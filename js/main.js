@@ -7,7 +7,6 @@ var startMapPinMainTop = mapPinMain.style.top;
 var startMapPinMainLeft = mapPinMain.style.left;
 
 var formAdElement = document.querySelector('.ad-form');
-var formResetElement = document.querySelector('.ad-form__reset');
 
 var mapWidth = mapContainer.clientWidth;
 var adverts = window.data.syncAdverts(mapWidth);
@@ -58,10 +57,6 @@ var deactivationPage = function () {
   // Отключение фильтра на карте
   window.filter.deactive();
 };
-
-formResetElement.addEventListener('click', function () {
-  deactivationPage();
-});
 
 window.util.initializationMove(mapPinMain, mapPinMain, window.map.getMapBounds(), function () {
   window.form.fillAddressField();
