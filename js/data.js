@@ -64,7 +64,7 @@
 
   var MAP_PIN_MAIN_ROUND_HEIGHT = 65;
 
-  var MAP_PIN_MAIN_HEIGHT = 65 + 22;
+  var MAP_PIN_MAIN_HEIGHT = 65 + 16;
 
   var ADVERT_AMOUNT = 8;
 
