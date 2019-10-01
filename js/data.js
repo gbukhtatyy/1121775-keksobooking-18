@@ -137,16 +137,6 @@
           'y': locationY
         }
       };
-    },
-
-    syncAdverts: function (mapWidth) {
-      this.adverts = [];
-
-      for (var i = 0; i < ADVERT_AMOUNT; i++) {
-        this.adverts.push(this.generateRandomAdvert(mapWidth));
-      }
-
-      return this.adverts;
     }
   };
 })();

@@ -9,9 +9,6 @@ var startMapPinMainLeft = mapPinMain.style.left;
 var formAdElement = document.querySelector('.ad-form');
 var formResetElement = document.querySelector('.ad-form__reset');
 
-var mapWidth = mapContainer.clientWidth;
-var adverts = window.data.syncAdverts(mapWidth);
-
 var mousedownMapPinMainHandler = function () {
   activationPage();
 };
@@ -20,14 +17,25 @@ var keydownEnterMapPinMainHandler = function (evt) {
   window.util.isEnterEvent(evt, activationPage);
 };
 
+var loadGetAdvertsHandler = function (response) {
+  window.data.adverts = response.slice();
+
+  window.map.showPins(window.data.adverts);
+};
+
+var errorGetAdvertsHandler = function (message) {
+  window.error.show(message);
+};
+
 var activationPage = function () {
+  window.backend.load(loadGetAdvertsHandler, errorGetAdvertsHandler);
+
   mapPinMain.removeEventListener('mousedown', mousedownMapPinMainHandler);
   mapPinMain.removeEventListener('keydown', keydownEnterMapPinMainHandler);
 
   mapContainer.classList.remove('map--faded');
 
   window.form.fillAddressField();
-  window.map.showPins(adverts);
 
   // Включение формы объявления
   window.form.active();
