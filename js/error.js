@@ -7,7 +7,7 @@
   window.error = {
     show: function (message) {
       var element = template.cloneNode(true);
-
+      element.querySelector('.error__message').innerHTML = message;
       mainContainer.append(element);
     }
   };
