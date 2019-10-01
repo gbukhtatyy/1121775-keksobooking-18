@@ -62,7 +62,9 @@
 
   var MAP_PIN_MAIN_WIDTH = 65;
 
-  var MAP_PIN_MAIN_HEIGHT = 65 + 22;
+  var MAP_PIN_MAIN_ROUND_HEIGHT = 65;
+
+  var MAP_PIN_MAIN_HEIGHT = 65 + 16;
 
   var ADVERT_AMOUNT = 8;
 
@@ -93,6 +95,7 @@
     MAP_PIN_WIDTH: MAP_PIN_WIDTH,
     MAP_PIN_HEIGHT: MAP_PIN_HEIGHT,
     MAP_PIN_MAIN_WIDTH: MAP_PIN_MAIN_WIDTH,
+    MAP_PIN_MAIN_ROUND_HEIGHT: MAP_PIN_MAIN_ROUND_HEIGHT,
     MAP_PIN_MAIN_HEIGHT: MAP_PIN_MAIN_HEIGHT,
     ADVERT_AMOUNT: ADVERT_AMOUNT,
     ADVERT_PRICE_MIN: ADVERT_PRICE_MIN,
@@ -127,7 +130,7 @@
           'checkout': window.util.getRandomElementArray(ADVERT_OFFER_TIME),
           'features': window.util.getRandomElementsArray(ADVERT_OFFER_FEATURES, window.util.getRandomInt(ADVERT_OFFER_FEATURES.length, 1)),
           'description': 'строка с описанием',
-          'photos': window.util.getRandomElementsArray(ADVERT_OFFER_PHOTOS, window.util.getRandomInt(ADVERT_OFFER_PHOTOS.length, 1)),
+          'photos': window.util.getRandomElementsArray(ADVERT_OFFER_PHOTOS, ADVERT_OFFER_PHOTOS.length),
         },
         'location': {
           'x': locationX,

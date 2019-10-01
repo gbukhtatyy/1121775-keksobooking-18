@@ -72,6 +72,85 @@
      */
     getRandomElementsArray: function (array, amount) {
       return window.util.shuffleArray(array).slice(0, amount);
+    },
+
+    initializationMove: function (element, elementTrigger, bounds, moveElementHandler) {
+      var minX = false;
+      var maxX = false;
+      var minY = false;
+      var maxY = false;
+
+      if (bounds.x) {
+        minX = bounds.x.min;
+        maxX = bounds.x.max;
+      }
+      if (bounds.y) {
+        minY = bounds.y.min;
+        maxY = bounds.y.max;
+      }
+
+      elementTrigger.addEventListener('mousedown', function (evt) {
+        evt.preventDefault();
+
+        var startCoords = {
+          x: evt.clientX,
+          y: evt.clientY
+        };
+
+        var dragged = false;
+
+        var onMouseMove = function (moveEvt) {
+          moveEvt.preventDefault();
+          dragged = true;
+
+          var shift = {
+            x: startCoords.x - moveEvt.clientX,
+            y: startCoords.y - moveEvt.clientY
+          };
+
+          startCoords = {
+            x: moveEvt.clientX,
+            y: moveEvt.clientY
+          };
+
+          shift.y = element.offsetTop - shift.y;
+          shift.x = element.offsetLeft - shift.x;
+
+          shift.x = minX !== false && shift.x < minX ? minX : shift.x;
+          shift.x = maxX !== false && shift.x > maxX ? maxX : shift.x;
+          shift.y = minY !== false && shift.y < minY ? minY : shift.y;
+          shift.y = maxY !== false && shift.y > maxY ? maxY : shift.y;
+
+          element.style.top = shift.y + 'px';
+          element.style.left = shift.x + 'px';
+
+          if (moveElementHandler) {
+            moveElementHandler();
+          }
+        };
+
+        var onMouseUp = function (upEvt) {
+          upEvt.preventDefault();
+
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+
+          if (dragged) {
+            var onClickPreventDefault = function (clickEvt) {
+              clickEvt.preventDefault();
+              element.removeEventListener('click', onClickPreventDefault);
+            };
+            element.addEventListener('click', onClickPreventDefault);
+          }
+
+          if (moveElementHandler) {
+            moveElementHandler();
+          }
+        };
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      });
     }
   };
 })();
