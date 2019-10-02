@@ -107,36 +107,6 @@
     ADVERT_GUESTS_MIN: ADVERT_GUESTS_MIN,
     ADVERT_GUESTS_MAX: ADVERT_GUESTS_MAX,
 
-    adverts: [],
-
-    generateRandomAdvert: function (maxLocationX) {
-      var locationX = window.util.getRandomInt(maxLocationX - 2 * MAP_PIN_WIDTH, MAP_PIN_WIDTH);
-      var locationY = window.util.getRandomInt(MAP_LOCATION_Y_MAX, MAP_LOCATION_Y_MIN);
-
-      var avatarNumber = window.util.getRandomInt(ADVERT_AVATAR_MAX, ADVERT_AVATAR_MIN);
-
-      return {
-        'author': {
-          'avatar': 'img/avatars/user0' + avatarNumber + '.png'
-        },
-        'offer': {
-          'title': 'заголовок предложения',
-          'address': locationX + ', ' + locationY,
-          'price': window.util.getRandomInt(ADVERT_PRICE_MAX, ADVERT_PRICE_MIN),
-          'type': window.util.getRandomElementArray(ADVERT_OFFER_TYPE),
-          'rooms': window.util.getRandomInt(ADVERT_ROOMS_MAX, ADVERT_ROOMS_MIN),
-          'guests': window.util.getRandomInt(ADVERT_GUESTS_MAX, ADVERT_GUESTS_MIN),
-          'checkin': window.util.getRandomElementArray(ADVERT_OFFER_TIME),
-          'checkout': window.util.getRandomElementArray(ADVERT_OFFER_TIME),
-          'features': window.util.getRandomElementsArray(ADVERT_OFFER_FEATURES, window.util.getRandomInt(ADVERT_OFFER_FEATURES.length, 1)),
-          'description': 'строка с описанием',
-          'photos': window.util.getRandomElementsArray(ADVERT_OFFER_PHOTOS, ADVERT_OFFER_PHOTOS.length),
-        },
-        'location': {
-          'x': locationX,
-          'y': locationY
-        }
-      };
-    }
+    adverts: []
   };
 })();
