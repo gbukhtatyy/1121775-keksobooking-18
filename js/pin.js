@@ -1,9 +1,10 @@
 'use strict';
 
 (function () {
-  /**
-   * Шаблон отображения маркера объявления
-   */
+
+  var MAP_PIN_WIDTH = 50;
+  var MAP_PIN_HEIGHT = 70;
+
   var templatePin = document.querySelector('#pin').content.querySelector('.map__pin');
 
   /**
@@ -17,8 +18,8 @@
     pinImageElement.alt = advert.offer.title;
     pinImageElement.src = advert.author.avatar;
 
-    element.style.left = (advert.location.x - (window.data.MAP_PIN_WIDTH / 2)) + 'px';
-    element.style.top = (advert.location.y - window.data.MAP_PIN_HEIGHT) + 'px';
+    element.style.left = (advert.location.x - (MAP_PIN_WIDTH / 2)) + 'px';
+    element.style.top = (advert.location.y - MAP_PIN_HEIGHT) + 'px';
   };
 
   window.pin = {

@@ -1,6 +1,13 @@
 'use strict';
 
 (function () {
+
+  var MAP_LOCATION_Y_MIN = 130;
+  var MAP_LOCATION_Y_MAX = 630;
+  var MAP_PIN_MAIN_WIDTH = 65;
+  var MAP_PIN_MAIN_ROUND_HEIGHT = 65;
+  var MAP_PIN_MAIN_HEIGHT = 65 + 16;
+
   var mapContainer = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapPinsContainer = document.querySelector('.map .map__pins');
@@ -78,12 +85,12 @@
     getMapBounds: function () {
       return {
         x: {
-          min: -(window.data.MAP_PIN_MAIN_WIDTH / 2),
-          max: parseInt(mapContainer.clientWidth, 10) - (window.data.MAP_PIN_MAIN_WIDTH / 2)
+          min: -(MAP_PIN_MAIN_WIDTH / 2),
+          max: parseInt(mapContainer.clientWidth, 10) - (MAP_PIN_MAIN_WIDTH / 2)
         },
         y: {
-          min: window.data.MAP_LOCATION_Y_MIN,
-          max: window.data.MAP_LOCATION_Y_MAX
+          min: MAP_LOCATION_Y_MIN,
+          max: MAP_LOCATION_Y_MAX
         }
       };
     },
@@ -98,12 +105,12 @@
 
       if (mapContainer.classList.contains('map--faded')) {
         // Метка адреса круглая берется центр
-        x += Math.floor(window.data.MAP_PIN_MAIN_WIDTH / 2);
-        y += Math.floor((window.data.MAP_PIN_MAIN_ROUND_HEIGHT) / 2);
+        x += Math.floor(MAP_PIN_MAIN_WIDTH / 2);
+        y += Math.floor((MAP_PIN_MAIN_ROUND_HEIGHT) / 2);
       } else {
-        // Метка адреса не круглая берется точка на которую указывает маркер
-        x += Math.floor(window.data.MAP_PIN_MAIN_WIDTH / 2);
-        y += Math.floor(window.data.MAP_PIN_MAIN_HEIGHT);
+        // Метка адреса с указателем берется точка на которую указывает маркер
+        x += Math.floor(MAP_PIN_MAIN_WIDTH / 2);
+        y += Math.floor(MAP_PIN_MAIN_HEIGHT);
       }
 
       return {

@@ -1,9 +1,15 @@
 'use strict';
 
 (function () {
-  /**
-   * Шаблон отображения карточки объявления
-   */
+  // Описание типов объявлений
+  var ADVERT_OFFER_TYPE_DESCRIPTION = {
+    'palace': 'Дворец',
+    'flat': 'Квартира',
+    'house': 'Дом',
+    'bungalo': 'Бунгало'
+  };
+
+  // Шаблон отображения карточки объявления
   var templatePinDescription = document.querySelector('#card').content.querySelector('article');
 
   /**
@@ -44,7 +50,7 @@
     element.querySelector('.popup__title').textContent = advert.offer.title;
     element.querySelector('.popup__text--address').textContent = advert.offer.address;
     element.querySelector('.popup__text--price').textContent = advert.offer.price + '₽/ночь';
-    element.querySelector('.popup__type').textContent = window.data.ADVERT_OFFER_TYPE_DESCRIPTION[advert.offer.type];
+    element.querySelector('.popup__type').textContent = ADVERT_OFFER_TYPE_DESCRIPTION[advert.offer.type];
     element.querySelector('.popup__text--capacity').textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей';
     element.querySelector('.popup__text--time').textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
     element.querySelector('.popup__description ').textContent = advert.offer.description;
