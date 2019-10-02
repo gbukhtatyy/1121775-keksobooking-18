@@ -71,7 +71,27 @@
   validateCapacityField();
   validatePriceField(); /**/
 
+  var successSubmitFormHandler = function () {
+    window.main.deactive();
+    window.success.show();
+  };
+
+  var errorSubmitFormHandler = function (message) {
+    window.error.show(message);
+  };
+
+  var submitFormHandler = function (evt) {
+    evt.preventDefault();
+
+    var data = new FormData(form);
+
+    window.backend.save(data, successSubmitFormHandler, errorSubmitFormHandler);
+  };
+
+  form.addEventListener('submit', submitFormHandler);
+
   window.form = {
+
     /**
      * Включение/выключение элементов формы
      * @param {Object} element Объект формы в DOM
