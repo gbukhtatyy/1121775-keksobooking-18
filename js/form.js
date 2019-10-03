@@ -15,16 +15,24 @@
     'palace': 10000
   };
 
+  var DEFAULT_TYPE_SELECTED_INDEX = 1;
+  var DEFAULT_PRICE_MIN = 1000;
+
+  var DEFAULT_CAPACITY_SELECTED_INDEX = 0;
+  var DEFAULT_ROOM_NUMBER_SELECTED_INDEX = 0;
+
   var form = document.querySelector('.ad-form');
 
   var fieldTitleElement = document.querySelector('#title');
-  var fieldCapacityElement = document.querySelector('#capacity');
-  var fieldRoomNumberElement = document.querySelector('#room_number');
   var fieldAddressElement = document.querySelector('#address');
-  var fieldTimeIn = document.querySelector('#timein');
-  var fieldTimeOut = document.querySelector('#timeout');
   var fieldType = document.querySelector('#type');
   var fieldPrice = document.querySelector('#price');
+  var fieldCapacityElement = document.querySelector('#capacity');
+  var fieldRoomNumberElement = document.querySelector('#room_number');
+  var fieldTimeIn = document.querySelector('#timein');
+  var fieldTimeOut = document.querySelector('#timeout');
+  var fieldDescription = document.querySelector('#description');
+  var fieldFeatures = document.querySelectorAll('input[name=features]');
 
   var validateCapacityField = function () {
     var roomNumber = fieldRoomNumberElement.value;
@@ -61,9 +69,29 @@
   fieldTimeOut.addEventListener('change', validateTimeFields);
 
   validateCapacityField();
-  validatePriceField();
+  validatePriceField(); /**/
+
+  var successSubmitFormHandler = function () {
+    window.main.deactive();
+    window.success.show();
+  };
+
+  var errorSubmitFormHandler = function (message) {
+    window.error.show(message);
+  };
+
+  var submitFormHandler = function (evt) {
+    evt.preventDefault();
+
+    var data = new FormData(form);
+
+    window.backend.save(data, successSubmitFormHandler, errorSubmitFormHandler);
+  };
+
+  form.addEventListener('submit', submitFormHandler);
 
   window.form = {
+
     /**
      * Включение/выключение элементов формы
      * @param {Object} element Объект формы в DOM
@@ -105,7 +133,25 @@
 
     clear: function () {
       fieldTitleElement.value = '';
-      fieldAddressElement.value = '';
+
+      this.fillAddressField();
+
+      fieldType.selectedIndex = DEFAULT_TYPE_SELECTED_INDEX;
+      fieldPrice.value = '';
+      fieldPrice.min = DEFAULT_PRICE_MIN;
+      fieldPrice.placeholder = DEFAULT_PRICE_MIN;
+
+      fieldCapacityElement.selectedIndex = DEFAULT_CAPACITY_SELECTED_INDEX;
+      fieldRoomNumberElement.selectedIndex = DEFAULT_ROOM_NUMBER_SELECTED_INDEX;
+
+      fieldTimeIn.selectedIndex = 0;
+      fieldTimeOut.selectedIndex = 0;
+
+      fieldDescription.value = '';
+
+      fieldFeatures.forEach(function (element) {
+        element.checked = false;
+      });
     }
   };
 })();

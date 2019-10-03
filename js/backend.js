@@ -7,6 +7,9 @@
   var LOAD_METHOD = 'GET';
   var LOAD_URL = 'https://js.dump.academy/keksobooking/data';
 
+  var SAVE_METHOD = 'POST';
+  var SAVE_URL = 'https://js.dump.academy/keksobooking';
+
   var sendXMLHttpRequest = function (url, method, data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
 
@@ -40,6 +43,9 @@
   window.backend = {
     load: function (onLoad, onError) {
       sendXMLHttpRequest(LOAD_URL, LOAD_METHOD, false, onLoad, onError);
+    },
+    save: function (data, onLoad, onError) {
+      sendXMLHttpRequest(SAVE_URL, SAVE_METHOD, data, onLoad, onError);
     },
   };
 })();
