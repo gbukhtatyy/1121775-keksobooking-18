@@ -19,7 +19,7 @@
     show: function (message) {
       errorPopup = template.cloneNode(true);
 
-      errorPopup.querySelector('.error__message').innerHTML = message;
+      errorPopup.querySelector('.error__message').textContent = message;
 
       mainContainer.append(errorPopup);
 
