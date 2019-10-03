@@ -56,8 +56,8 @@
 
     var minPrice = TYPE_PRICE_RELATION[type] ? TYPE_PRICE_RELATION[type] : 0;
 
-    fieldPrice.setAttribute('min', minPrice);
-    fieldPrice.setAttribute('placeholder', minPrice);
+    fieldPrice.min = minPrice;
+    fieldPrice.placeholder = minPrice;
   };
 
   fieldRoomNumberElement.addEventListener('change', validateCapacityField);
