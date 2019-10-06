@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var form = document.querySelector('.map__filters');
   var selectFields = form.querySelectorAll('select');
   var checkboxFields = form.querySelectorAll('input[type=checkbox]');

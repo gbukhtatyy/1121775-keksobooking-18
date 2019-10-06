@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var ROOM_GUEST_RELATION = {
     1: [1],
     2: [1, 2],

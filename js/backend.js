@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var XHR_STATUS_SUCCESS = 200;
   var XHR_TIMEOUT = 1000;
 

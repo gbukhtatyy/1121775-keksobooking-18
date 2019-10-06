@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var container = document.querySelector('main');
   var template = document.querySelector('#success').content.querySelector('.success');
   var popup = false;

@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   // Описание типов объявлений
   var ADVERT_OFFER_TYPE_DESCRIPTION = {
     'palace': 'Дворец',
