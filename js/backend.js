@@ -11,6 +11,14 @@
   var SAVE_METHOD = 'POST';
   var SAVE_URL = 'https://js.dump.academy/keksobooking';
 
+  /**
+   * Выполнение запроса к серверу
+   * @param {String} url
+   * @param {String} method
+   * @param {FormData} data
+   * @param {Function} onLoad
+   * @param {Function} onError
+   */
   var sendXMLHttpRequest = function (url, method, data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
 
@@ -42,9 +50,21 @@
   };
 
   window.backend = {
+    /**
+     * Получение меток похожих объявлений
+     * @param {Function} onLoad
+     * @param {Function} onError
+     */
     load: function (onLoad, onError) {
       sendXMLHttpRequest(LOAD_URL, LOAD_METHOD, false, onLoad, onError);
     },
+
+    /**
+     * Сохранение объявления
+     * @param {FormData} data
+     * @param {Function} onLoad
+     * @param {Function} onError
+     */
     save: function (data, onLoad, onError) {
       sendXMLHttpRequest(SAVE_URL, SAVE_METHOD, data, onLoad, onError);
     },
