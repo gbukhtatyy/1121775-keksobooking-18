@@ -8,7 +8,6 @@
   var startMapPinMainTop = mapPinMain.style.top;
   var startMapPinMainLeft = mapPinMain.style.left;
 
-  var formAdElement = document.querySelector('.ad-form');
   var formResetElement = document.querySelector('.ad-form__reset');
 
   var mousedownMapPinMainHandler = function () {
@@ -49,8 +48,6 @@
   var deactivationPage = function () {
     mapPinMain.addEventListener('mousedown', mousedownMapPinMainHandler);
     mapPinMain.addEventListener('keydown', keydownEnterMapPinMainHandler);
-
-    window.form.changeDisabledFormElements(formAdElement, true);
 
     mapContainer.classList.add('map--faded');
 
