@@ -74,7 +74,7 @@
       return window.util.shuffleArray(array).slice(0, amount);
     },
 
-    initializationMove: function (element, elementTrigger, bounds, moveElementHandler) {
+    initializationMove: function (element, elementTrigger, bounds, elementMoveHandler) {
       var minX = false;
       var maxX = false;
       var minY = false;
@@ -99,7 +99,7 @@
 
         var dragged = false;
 
-        var onMouseMove = function (moveEvt) {
+        var mouseMoveHandler = function (moveEvt) {
           moveEvt.preventDefault();
           dragged = true;
 
@@ -124,32 +124,32 @@
           element.style.top = shift.y + 'px';
           element.style.left = shift.x + 'px';
 
-          if (moveElementHandler) {
-            moveElementHandler();
+          if (elementMoveHandler) {
+            elementMoveHandler();
           }
         };
 
-        var onMouseUp = function (upEvt) {
+        var mouseUpHandler = function (upEvt) {
           upEvt.preventDefault();
 
-          document.removeEventListener('mousemove', onMouseMove);
-          document.removeEventListener('mouseup', onMouseUp);
+          document.removeEventListener('mousemove', mouseMoveHandler);
+          document.removeEventListener('mouseup', mouseUpHandler);
 
           if (dragged) {
-            var onClickPreventDefault = function (clickEvt) {
+            var clickPreventDefaultHandler = function (clickEvt) {
               clickEvt.preventDefault();
-              element.removeEventListener('click', onClickPreventDefault);
+              element.removeEventListener('click', clickPreventDefaultHandler);
             };
-            element.addEventListener('click', onClickPreventDefault);
+            element.addEventListener('click', clickPreventDefaultHandler);
           }
 
-          if (moveElementHandler) {
-            moveElementHandler();
+          if (elementMoveHandler) {
+            elementMoveHandler();
           }
         };
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
       });
     }
   };
