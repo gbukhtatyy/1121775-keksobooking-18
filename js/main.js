@@ -19,9 +19,9 @@
   };
 
   var advertsLoadSuccessHandler = function (response) {
-    window.data.adverts = response.slice();
+    window.main.adverts = response.slice();
 
-    window.map.showPins(window.data.adverts);
+    window.map.showPins(window.main.adverts);
   };
 
   var advertsLoadErrorHandler = function (message) {
@@ -72,6 +72,7 @@
   deactivationPage();
 
   window.main = {
+    adverts: [],
     deactive: deactivationPage
   };
 })();
