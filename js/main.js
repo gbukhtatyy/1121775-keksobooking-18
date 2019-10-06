@@ -8,35 +8,33 @@
   var startMapPinMainTop = mapPinMain.style.top;
   var startMapPinMainLeft = mapPinMain.style.left;
 
-  var formResetElement = document.querySelector('.ad-form__reset');
+  var buttonReset = document.querySelector('.ad-form__reset');
 
-  var mousedownMapPinMainHandler = function () {
+  var mapPinMainMousedownHandler = function () {
     activationPage();
   };
 
-  var keydownEnterMapPinMainHandler = function (evt) {
+  var mapPinMainKeydownEnterHandler = function (evt) {
     window.util.isEnterEvent(evt, activationPage);
   };
 
-  var loadGetAdvertsHandler = function (response) {
+  var advertsLoadSuccessHandler = function (response) {
     window.data.adverts = response.slice();
 
     window.map.showPins(window.data.adverts);
   };
 
-  var errorGetAdvertsHandler = function (message) {
+  var advertsLoadErrorHandler = function (message) {
     window.error.show(message);
   };
 
   var activationPage = function () {
-    window.backend.load(loadGetAdvertsHandler, errorGetAdvertsHandler);
+    window.backend.load(advertsLoadSuccessHandler, advertsLoadErrorHandler);
 
-    mapPinMain.removeEventListener('mousedown', mousedownMapPinMainHandler);
-    mapPinMain.removeEventListener('keydown', keydownEnterMapPinMainHandler);
+    mapPinMain.removeEventListener('mousedown', mapPinMainMousedownHandler);
+    mapPinMain.removeEventListener('keydown', mapPinMainKeydownEnterHandler);
 
     mapContainer.classList.remove('map--faded');
-
-    window.form.fillAddressField();
 
     // Включение формы объявления
     window.form.active();
@@ -46,8 +44,8 @@
   };
 
   var deactivationPage = function () {
-    mapPinMain.addEventListener('mousedown', mousedownMapPinMainHandler);
-    mapPinMain.addEventListener('keydown', keydownEnterMapPinMainHandler);
+    mapPinMain.addEventListener('mousedown', mapPinMainMousedownHandler);
+    mapPinMain.addEventListener('keydown', mapPinMainKeydownEnterHandler);
 
     mapContainer.classList.add('map--faded');
 
@@ -56,9 +54,6 @@
 
     window.map.removePins();
 
-    window.form.clear();
-    window.form.fillAddressField();
-
     // Отключение формы объявления
     window.form.deactive();
 
@@ -66,7 +61,7 @@
     window.filter.deactive();
   };
 
-  formResetElement.addEventListener('click', function () {
+  buttonReset.addEventListener('click', function () {
     deactivationPage();
   });
 

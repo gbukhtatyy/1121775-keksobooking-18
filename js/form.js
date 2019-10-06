@@ -116,6 +116,8 @@
     active: function () {
       form.classList.remove('ad-form--disabled');
 
+      this.fillAddressField();
+
       this.changeDisabledFormElements(form, false);
     },
 
