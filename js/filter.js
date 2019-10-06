@@ -19,6 +19,7 @@
      */
     deactive: function () {
       this.clear();
+
       window.form.changeDisabledFormElements(form, true);
     },
 
