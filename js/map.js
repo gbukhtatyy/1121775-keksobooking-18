@@ -40,7 +40,7 @@
   var showPinDescription = function (advert) {
     removeCards();
 
-    var card = window.card.createElement(advert);
+    var card = window.card.create(advert);
 
     document.addEventListener('keydown', mapEscPressHandler);
     card.querySelector('.popup__close').addEventListener('click', clickCloseCardHandler(card));
