@@ -23,7 +23,7 @@
     advert.offer.features.forEach(function (feature) {
       featuresContent += '<li class="popup__feature popup__feature--' + feature + '"></li>';
     });
-    featuresElement.innerHTML = featuresContent;
+    featuresElement.textContent = featuresContent;
   };
 
   /**
@@ -37,7 +37,7 @@
     advert.offer.photos.forEach(function (photo) {
       photosContent += '<img src="' + photo + '" class="popup__photo" width="45" height="40" alt="' + advert.offer.title + '"></li>';
     });
-    photosElement.innerHTML = photosContent;
+    photosElement.textContent = photosContent;
   };
 
   /**
