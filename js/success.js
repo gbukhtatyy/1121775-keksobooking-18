@@ -1,34 +1,35 @@
 'use strict';
 
 (function () {
-  var mainContainer = document.querySelector('main');
-  var template = document.querySelector('#success').content.querySelector('.success');
-  var successPopup = false;
 
-  var enterEscSuccessPopupHanlder = function (evt) {
+  var container = document.querySelector('main');
+  var template = document.querySelector('#success').content.querySelector('.success');
+  var popup = false;
+
+  var popupKeydownEscHandler = function (evt) {
     window.util.isEscEvent(evt, function () {
       window.success.close();
     });
   };
 
-  var clickCloseSuccessPopupHandler = function () {
+  var popupCloseClickHandler = function () {
     window.success.close();
   };
 
   window.success = {
     show: function () {
-      successPopup = template.cloneNode(true);
+      popup = template.cloneNode(true);
 
-      mainContainer.append(successPopup);
+      container.append(popup);
 
-      document.addEventListener('keydown', enterEscSuccessPopupHanlder);
-      successPopup.addEventListener('click', clickCloseSuccessPopupHandler);
+      document.addEventListener('keydown', popupKeydownEscHandler);
+      popup.addEventListener('click', popupCloseClickHandler);
     },
     close: function () {
-      successPopup.removeEventListener('click', clickCloseSuccessPopupHandler);
-      document.removeEventListener('keydown', enterEscSuccessPopupHanlder);
+      popup.removeEventListener('click', popupKeydownEscHandler);
+      document.removeEventListener('keydown', popupCloseClickHandler);
 
-      successPopup.remove();
+      popup.remove();
     }
   };
 })();

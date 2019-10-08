@@ -13,14 +13,14 @@
   var mapPinsContainer = document.querySelector('.map .map__pins');
   var mapFiltersContainer = document.querySelector('.map .map__filters-container');
 
-  var clickCloseCardHandler = function (card) {
+  var closeCardClickHandler = function (card) {
     return function () {
       card.remove();
       removeActivePin();
     };
   };
 
-  var mapEscPressHandler = function (evt) {
+  var mapKeydownEscHandler = function (evt) {
     window.util.isEscEvent(evt, function () {
       removeCards();
       removeActivePin();
@@ -28,11 +28,11 @@
   };
 
   var removeCards = function () {
-    document.removeEventListener('keydown', mapEscPressHandler);
+    document.removeEventListener('keydown', mapKeydownEscHandler);
 
     var cards = mapContainer.querySelectorAll('.map__card');
     cards.forEach(function (card) {
-      card.querySelector('.popup__close').removeEventListener('click', clickCloseCardHandler(card));
+      card.querySelector('.popup__close').removeEventListener('click', closeCardClickHandler(card));
       card.remove();
     });
   };
@@ -40,10 +40,10 @@
   var showPinDescription = function (advert) {
     removeCards();
 
-    var card = window.card.createElement(advert);
+    var card = window.card.create(advert);
 
-    document.addEventListener('keydown', mapEscPressHandler);
-    card.querySelector('.popup__close').addEventListener('click', clickCloseCardHandler(card));
+    document.addEventListener('keydown', mapKeydownEscHandler);
+    card.querySelector('.popup__close').addEventListener('click', closeCardClickHandler(card));
 
     mapFiltersContainer.before(card);
   };
@@ -63,16 +63,12 @@
       button = button.closest('button');
     }
 
-    if (button === null) {
-      return;
-    }
-
-    if (button.classList.contains('map__pin--main')) {
+    if ((button === null) || (button.classList.contains('map__pin--main'))) {
       return;
     }
 
     var idAdvert = button.getAttribute('data-id');
-    var advert = window.data.adverts[idAdvert];
+    var advert = window.main.adverts[idAdvert];
 
     removeActivePin();
 
@@ -82,6 +78,10 @@
   });
 
   window.map = {
+    /**
+     * Получение границ карты
+     * @return {Object} Обхект с описанием границ карты
+     */
     getMapBounds: function () {
       return {
         x: {
@@ -127,12 +127,15 @@
       var fragmentPins = document.createDocumentFragment();
 
       for (var i = 0; i < adverts.length; i++) {
-        fragmentPins.appendChild(window.pin.createElement(adverts[i], i));
+        fragmentPins.appendChild(window.pin.create(adverts[i], i));
       }
 
       mapPinsContainer.appendChild(fragmentPins);
     },
 
+    /**
+     * Удаление карточек объявлений и маркеров с карты
+     */
     removePins: function () {
       removeCards();
 

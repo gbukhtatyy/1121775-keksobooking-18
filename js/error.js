@@ -1,38 +1,39 @@
 'use strict';
 
 (function () {
-  var mainContainer = document.querySelector('main');
-  var template = document.querySelector('#error').content.querySelector('.error');
-  var errorPopup = false;
 
-  var enterEscErrorPopupHanlder = function (evt) {
+  var container = document.querySelector('main');
+  var template = document.querySelector('#error').content.querySelector('.error');
+  var popup = false;
+
+  var popupKeydownEscHandler = function (evt) {
     window.util.isEscEvent(evt, function () {
       window.error.close();
     });
   };
 
-  var clickCloseErrorPopupHandler = function () {
+  var popupCloseClickHandler = function () {
     window.error.close();
   };
 
   window.error = {
     show: function (message) {
-      errorPopup = template.cloneNode(true);
+      popup = template.cloneNode(true);
 
-      errorPopup.querySelector('.error__message').innerHTML = message;
+      popup.querySelector('.error__message').textContent = message;
 
-      mainContainer.append(errorPopup);
+      container.append(popup);
 
-      errorPopup.querySelector('.error__button').addEventListener('click', clickCloseErrorPopupHandler);
-      document.addEventListener('keydown', enterEscErrorPopupHanlder);
-      errorPopup.addEventListener('click', clickCloseErrorPopupHandler);
+      popup.querySelector('.error__button').addEventListener('click', popupCloseClickHandler);
+      document.addEventListener('keydown', popupKeydownEscHandler);
+      popup.addEventListener('click', popupCloseClickHandler);
     },
     close: function () {
-      errorPopup.addEventListener('click', clickCloseErrorPopupHandler);
-      document.removeEventListener('keydown', enterEscErrorPopupHanlder);
-      errorPopup.querySelector('.error__button').removeEventListener('click', clickCloseErrorPopupHandler);
+      popup.addEventListener('click', popupCloseClickHandler);
+      document.removeEventListener('keydown', popupKeydownEscHandler);
+      popup.querySelector('.error__button').removeEventListener('click', popupCloseClickHandler);
 
-      errorPopup.remove();
+      popup.remove();
     }
   };
 })();

@@ -30,51 +30,7 @@
       }
     },
 
-    /**
-     * Получение случайного числа в заданном диапозоне
-     *
-     * @param {number} max максимальное значение
-     * @param {number} min минимальное значение
-     * @return {number} случайное значение в заданных диапозонах
-     */
-    getRandomInt: function (max, min) {
-      max = max ? max : 1;
-      min = min ? min : 0;
-
-      return Math.floor(Math.random() * Math.floor(max - min)) + min;
-    },
-
-    /**
-     * Получение случайного элемента из массива
-     * @param {Array} array
-     * @return {*} случайных элемент массива
-     */
-    getRandomElementArray: function (array) {
-      return array[window.util.getRandomInt(array.length)];
-    },
-
-    /**
-     * Получение перемешанного массива
-     * @param {Array} array исходный массив
-     * @return {Array} перемешанный массив
-     */
-    shuffleArray: function (array) {
-      return array.slice(0).sort(function () {
-        return Math.random() - 0.5;
-      });
-    },
-
-    /**
-     * Получение amount случайных элементов из массива array
-     * @param {Array} array исходный массив
-     * @param {number} amount кол-во случайных элементов
-     * @return {Array} массив случайных элементов из массива array
-     */
-    getRandomElementsArray: function (array, amount) {
-      return window.util.shuffleArray(array).slice(0, amount);
-    },
-
-    initializationMove: function (element, elementTrigger, bounds, moveElementHandler) {
+    initializationMove: function (element, elementTrigger, bounds, elementMoveHandler) {
       var minX = false;
       var maxX = false;
       var minY = false;
@@ -99,7 +55,7 @@
 
         var dragged = false;
 
-        var onMouseMove = function (moveEvt) {
+        var mouseMoveHandler = function (moveEvt) {
           moveEvt.preventDefault();
           dragged = true;
 
@@ -124,32 +80,32 @@
           element.style.top = shift.y + 'px';
           element.style.left = shift.x + 'px';
 
-          if (moveElementHandler) {
-            moveElementHandler();
+          if (elementMoveHandler) {
+            elementMoveHandler();
           }
         };
 
-        var onMouseUp = function (upEvt) {
+        var mouseUpHandler = function (upEvt) {
           upEvt.preventDefault();
 
-          document.removeEventListener('mousemove', onMouseMove);
-          document.removeEventListener('mouseup', onMouseUp);
+          document.removeEventListener('mousemove', mouseMoveHandler);
+          document.removeEventListener('mouseup', mouseUpHandler);
 
           if (dragged) {
-            var onClickPreventDefault = function (clickEvt) {
+            var clickPreventDefaultHandler = function (clickEvt) {
               clickEvt.preventDefault();
-              element.removeEventListener('click', onClickPreventDefault);
+              element.removeEventListener('click', clickPreventDefaultHandler);
             };
-            element.addEventListener('click', onClickPreventDefault);
+            element.addEventListener('click', clickPreventDefaultHandler);
           }
 
-          if (moveElementHandler) {
-            moveElementHandler();
+          if (elementMoveHandler) {
+            elementMoveHandler();
           }
         };
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
       });
     }
   };

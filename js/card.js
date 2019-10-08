@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   // Описание типов объявлений
   var ADVERT_OFFER_TYPE_DESCRIPTION = {
     'palace': 'Дворец',
@@ -10,7 +11,7 @@
   };
 
   // Шаблон отображения карточки объявления
-  var templatePinDescription = document.querySelector('#card').content.querySelector('article');
+  var template = document.querySelector('#card').content.querySelector('article');
 
   /**
    * Заполнение тэгов объявления
@@ -18,12 +19,12 @@
    * @param {Object} advert объект объявления
    */
   var fillAdvertFeatures = function (element, advert) {
-    var featuresElement = element.querySelector('.popup__features');
+    var features = element.querySelector('.popup__features');
     var featuresContent = '';
     advert.offer.features.forEach(function (feature) {
       featuresContent += '<li class="popup__feature popup__feature--' + feature + '"></li>';
     });
-    featuresElement.innerHTML = featuresContent;
+    features.innerHTML = featuresContent;
   };
 
   /**
@@ -32,12 +33,12 @@
    * @param {Object} advert объект объявления
    */
   var fillAdvertPhotos = function (element, advert) {
-    var photosElement = element.querySelector('.popup__photos');
+    var photos = element.querySelector('.popup__photos');
     var photosContent = '';
     advert.offer.photos.forEach(function (photo) {
       photosContent += '<img src="' + photo + '" class="popup__photo" width="45" height="40" alt="' + advert.offer.title + '"></li>';
     });
-    photosElement.innerHTML = photosContent;
+    photos.innerHTML = photosContent;
   };
 
   /**
@@ -65,12 +66,12 @@
      * @param {Object} advert объект объявления
      * @return {Object} разметка картоки объявления
      */
-    createElement: function (advert) {
-      var template = templatePinDescription.cloneNode(true);
+    create: function (advert) {
+      var card = template.cloneNode(true);
 
-      fillPinDescriptionElement(template, advert);
+      fillPinDescriptionElement(card, advert);
 
-      return template;
+      return card;
     }
   };
 })();

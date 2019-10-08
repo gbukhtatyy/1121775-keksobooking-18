@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var ROOM_GUEST_RELATION = {
     1: [1],
     2: [1, 2],
@@ -23,27 +24,27 @@
 
   var form = document.querySelector('.ad-form');
 
-  var fieldTitleElement = document.querySelector('#title');
-  var fieldAddressElement = document.querySelector('#address');
+  var fieldTitle = document.querySelector('#title');
+  var fieldAddress = document.querySelector('#address');
   var fieldType = document.querySelector('#type');
   var fieldPrice = document.querySelector('#price');
-  var fieldCapacityElement = document.querySelector('#capacity');
-  var fieldRoomNumberElement = document.querySelector('#room_number');
+  var fieldCapacity = document.querySelector('#capacity');
+  var fieldRoomNumber = document.querySelector('#room_number');
   var fieldTimeIn = document.querySelector('#timein');
   var fieldTimeOut = document.querySelector('#timeout');
   var fieldDescription = document.querySelector('#description');
   var fieldFeatures = document.querySelectorAll('input[name=features]');
 
-  var validateCapacityField = function () {
-    var roomNumber = fieldRoomNumberElement.value;
-    var capacity = fieldCapacityElement.value * 1;
+  var capacityFieldChangeHandler = function () {
+    var roomNumber = fieldRoomNumber.value;
+    var capacity = fieldCapacity.value * 1;
     var availableValues = ROOM_GUEST_RELATION[roomNumber];
     var message = availableValues.includes(capacity) ? '' : 'Количество гостей не влезут в выбранную комнату';
 
-    fieldCapacityElement.setCustomValidity(message);
+    fieldCapacity.setCustomValidity(message);
   };
 
-  var validateTimeFields = function (evt) {
+  var timeFieldsChangeHandler = function (evt) {
     if (fieldTimeIn === evt.target) {
       fieldTimeOut.value = fieldTimeIn.value;
     } else {
@@ -51,44 +52,42 @@
     }
   };
 
-  var validatePriceField = function () {
+  var priceFieldChangeHandler = function () {
     var type = fieldType.value;
 
     var minPrice = TYPE_PRICE_RELATION[type] ? TYPE_PRICE_RELATION[type] : 0;
 
-    fieldPrice.setAttribute('min', minPrice);
-    fieldPrice.setAttribute('placeholder', minPrice);
+    fieldPrice.min = minPrice;
+    fieldPrice.placeholder = minPrice;
   };
 
-  fieldRoomNumberElement.addEventListener('change', validateCapacityField);
-  fieldCapacityElement.addEventListener('change', validateCapacityField);
+  fieldRoomNumber.addEventListener('change', capacityFieldChangeHandler);
+  fieldCapacity.addEventListener('change', capacityFieldChangeHandler);
+  fieldTimeIn.addEventListener('change', timeFieldsChangeHandler);
+  fieldTimeOut.addEventListener('change', timeFieldsChangeHandler);
+  fieldType.addEventListener('change', priceFieldChangeHandler);
 
-  fieldType.addEventListener('change', validatePriceField);
+  capacityFieldChangeHandler();
+  priceFieldChangeHandler(); /**/
 
-  fieldTimeIn.addEventListener('change', validateTimeFields);
-  fieldTimeOut.addEventListener('change', validateTimeFields);
-
-  validateCapacityField();
-  validatePriceField(); /**/
-
-  var successSubmitFormHandler = function () {
+  var formSubmitSuccessHandler = function () {
     window.main.deactive();
     window.success.show();
   };
 
-  var errorSubmitFormHandler = function (message) {
+  var formSubmitErrorHandler = function (message) {
     window.error.show(message);
   };
 
-  var submitFormHandler = function (evt) {
+  var formSubmitHandler = function (evt) {
     evt.preventDefault();
 
     var data = new FormData(form);
 
-    window.backend.save(data, successSubmitFormHandler, errorSubmitFormHandler);
+    window.backend.save(data, formSubmitSuccessHandler, formSubmitErrorHandler);
   };
 
-  form.addEventListener('submit', submitFormHandler);
+  form.addEventListener('submit', formSubmitHandler);
 
   window.form = {
 
@@ -108,7 +107,7 @@
     fillAddressField: function () {
       var coordinates = window.map.getCoordinatesPinMain();
 
-      fieldAddressElement.value = coordinates.x + ', ' + coordinates.y;
+      fieldAddress.value = coordinates.x + ', ' + coordinates.y;
     },
 
     /**
@@ -116,6 +115,8 @@
      */
     active: function () {
       form.classList.remove('ad-form--disabled');
+
+      this.fillAddressField();
 
       this.changeDisabledFormElements(form, false);
     },
@@ -131,8 +132,11 @@
       form.classList.add('ad-form--disabled');
     },
 
+    /**
+     * Сброс значений элементов формы фильтра на карте
+     */
     clear: function () {
-      fieldTitleElement.value = '';
+      fieldTitle.value = '';
 
       this.fillAddressField();
 
@@ -141,8 +145,8 @@
       fieldPrice.min = DEFAULT_PRICE_MIN;
       fieldPrice.placeholder = DEFAULT_PRICE_MIN;
 
-      fieldCapacityElement.selectedIndex = DEFAULT_CAPACITY_SELECTED_INDEX;
-      fieldRoomNumberElement.selectedIndex = DEFAULT_ROOM_NUMBER_SELECTED_INDEX;
+      fieldCapacity.selectedIndex = DEFAULT_CAPACITY_SELECTED_INDEX;
+      fieldRoomNumber.selectedIndex = DEFAULT_ROOM_NUMBER_SELECTED_INDEX;
 
       fieldTimeIn.selectedIndex = 0;
       fieldTimeOut.selectedIndex = 0;
