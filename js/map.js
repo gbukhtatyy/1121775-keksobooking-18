@@ -8,8 +8,6 @@
   var MAP_PIN_MAIN_ROUND_HEIGHT = 65;
   var MAP_PIN_MAIN_HEIGHT = 65 + 16;
 
-  var adverts = [];
-
   var mapContainer = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapPinsContainer = document.querySelector('.map .map__pins');
