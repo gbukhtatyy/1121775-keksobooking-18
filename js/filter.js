@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var ADVERT_LOW_PRICE = 10000;
+  var ADVERT_HIGH_PRICE = 50000;
 
   var form = document.querySelector('.map__filters');
   var selectFields = form.querySelectorAll('select');
@@ -67,9 +69,36 @@
      */
     apply: function (adverts) {
       var fields = window.filter.fields;
+      console.log(fields);
+
+      var minPrice = false;
+      var maxPrice = false;
+
+      if (fields.price !== 'any') {
+        switch (fields.price) {
+          case 'low':
+            maxPrice = ADVERT_LOW_PRICE;
+            break;
+          case 'middle':
+            minPrice = ADVERT_LOW_PRICE;
+            maxPrice = ADVERT_HIGH_PRICE;
+            break;
+          case 'high':
+            minPrice = ADVERT_HIGH_PRICE;
+            break;
+        }
+      }
 
       return adverts.filter(function (advert) {
         if (fields.type !== 'any' && advert.offer.type !== fields.type) {
+          return false;
+        }
+
+        if (maxPrice && advert.offer.price > maxPrice) {
+          return false;
+        }
+
+        if (minPrice && advert.offer.price < minPrice) {
           return false;
         }
 
