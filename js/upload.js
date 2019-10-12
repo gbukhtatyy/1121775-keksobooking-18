@@ -27,23 +27,24 @@
     },
     initWithCallback: function (input, cb) {
       input.addEventListener('change', function () {
-        var file = input.files[0];
-        var fileName = file.name.toLowerCase();
+        [].forEach.call(input.files, function (file) {
+          var fileName = file.name.toLowerCase();
 
-        var matches = FILE_TYPES.some(function (it) {
-          return fileName.endsWith(it);
-        });
-
-        if (matches) {
-          var reader = new FileReader();
-
-          reader.addEventListener('load', function () {
-            cb(reader.result);
+          var matches = FILE_TYPES.some(function (it) {
+            return fileName.endsWith(it);
           });
 
-          reader.readAsDataURL(file);
-        }
+          if (matches) {
+            var reader = new FileReader();
+
+            reader.addEventListener('load', function () {
+              cb(reader.result);
+            });
+
+            reader.readAsDataURL(file);
+          }
+        });
       });
-    },
+    }
   };
 })();

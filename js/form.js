@@ -79,19 +79,13 @@
   containerImages.style['background-color'] = 'transparent';
   containerImages.style.display = 'flex';
   containerImages.style.width = '300px';
-  containerImages.style['flex-wrap'] = 'wrap';
+  containerImages.style['flex-wrap'] = 'wrap';/**/
 
   window.upload.init(fieldAvatar, imageAvatar);
   window.upload.initWithCallback(fieldImages, function (file) {
     var image = document.createElement('img');
 
-    image.classList.add('ad-form__photo-item');
-
-    image.height = 70;
-    image.width = 70;
-    image.style['margin-right'] = '5px';
-    image.style['margin-bottom'] = '5px';
-
+    image.classList.add('ad-form__photo');
     image.src = file;
 
     containerImages.appendChild(image);
