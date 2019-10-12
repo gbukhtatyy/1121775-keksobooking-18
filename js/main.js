@@ -19,9 +19,12 @@
   };
 
   var advertsLoadSuccessHandler = function (response) {
-    window.main.adverts = response.slice();
+    window.main.adverts = response.slice().map(function (advert, index) {
+      advert.id = index;
+      return advert;
+    });
 
-    window.map.showPins(window.main.adverts);
+    window.main.renderMapPins();
   };
 
   var advertsLoadErrorHandler = function (message) {
@@ -73,6 +76,11 @@
 
   window.main = {
     adverts: [],
-    deactive: deactivationPage
+    deactive: deactivationPage,
+    renderMapPins: function () {
+      window.map.removePins();
+
+      window.map.showPins(window.filter.apply(window.main.adverts));
+    }
   };
 })();
