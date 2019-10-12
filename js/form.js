@@ -76,10 +76,10 @@
   fieldType.addEventListener('change', priceFieldChangeHandler);
 
   // Выставление стилей для контейнера фотографий
-  containerImages.style['background-color'] = 'transparent';
+  containerImages.style.backgroundColor = 'transparent';
   containerImages.style.display = 'flex';
   containerImages.style.width = '300px';
-  containerImages.style['flex-wrap'] = 'wrap';/**/
+  containerImages.style.flexWrap = 'wrap'; /**/
 
   window.upload.init(fieldAvatar, imageAvatar);
   window.upload.initWithCallback(fieldImages, function (file) {
@@ -114,7 +114,6 @@
   form.addEventListener('submit', formSubmitHandler);
 
   window.form = {
-
     /**
      * Включение/выключение элементов формы
      * @param {Object} element Объект формы в DOM
@@ -160,6 +159,7 @@
      * Сброс значений элементов формы фильтра на карте
      */
     clear: function () {
+
       fieldTitle.value = '';
 
       this.fillAddressField();
