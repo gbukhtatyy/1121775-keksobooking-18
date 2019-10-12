@@ -9,6 +9,8 @@
   var MAP_LOCATION_Y_MIN = 49; // 130 - MAP_PIN_MAIN_HEIGHT = 49
   var MAP_LOCATION_Y_MAX = 549; // 630 - MAP_PIN_MAIN_HEIGHT = 549
 
+  var MAP_ADVERT_AMOUNT = 5;
+
   var mapContainer = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
   var mapPinsContainer = document.querySelector('.map .map__pins');
@@ -122,7 +124,7 @@
     showPins: function (adverts) {
       var fragmentPins = document.createDocumentFragment();
 
-      for (var i = 0; i < adverts.length; i++) {
+      for (var i = 0; i < Math.min(adverts.length, MAP_ADVERT_AMOUNT); i++) {
         fragmentPins.appendChild(window.pin.create(adverts[i], i));
       }
 
