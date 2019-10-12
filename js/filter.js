@@ -69,7 +69,6 @@
      */
     apply: function (adverts) {
       var fields = window.filter.fields;
-      console.log(fields);
 
       var minPrice = false;
       var maxPrice = false;
