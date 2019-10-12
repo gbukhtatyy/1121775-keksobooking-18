@@ -20,8 +20,6 @@
     window.filter.fields.features = [].map.call(fieldFeatures.querySelectorAll('[name=features]:checked'), function (element) {
       return element.value;
     });
-
-    console.log(window.filter.fields);
   };
 
   fieldHousingType.addEventListener('change', saveFilterValues);

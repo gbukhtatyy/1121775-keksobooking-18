@@ -67,7 +67,7 @@
       button = button.closest('button');
     }
 
-    if ((button === null) || (button.classList.contains('map__pin--main'))) {
+    if ((button === null) || (button.classList.contains('map__pin--main')) || (button.classList.contains('map__pin--active'))) {
       return;
     }
 
