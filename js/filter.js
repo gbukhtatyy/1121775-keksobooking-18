@@ -116,11 +116,7 @@
           return false;
         }
 
-        if (fields.features.length > 0 && advertFeatures.length !== fields.features.length) {
-          return false;
-        }
-
-        return true;
+        return !(fields.features.length > 0 && advertFeatures.length !== fields.features.length);
       });
     },
 
