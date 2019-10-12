@@ -90,7 +90,18 @@
       }
 
       return adverts.filter(function (advert) {
+        var rooms = advert.offer.rooms + '';
+        var guests = advert.offer.guests + '';
+
         if (fields.type !== 'any' && advert.offer.type !== fields.type) {
+          return false;
+        }
+
+        if (fields.rooms !== 'any' && rooms !== fields.rooms) {
+          return false;
+        }
+
+        if (fields.guests !== 'any' && guests !== fields.guests) {
           return false;
         }
 
