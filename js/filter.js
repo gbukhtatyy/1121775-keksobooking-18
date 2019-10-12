@@ -93,6 +93,10 @@
         var rooms = advert.offer.rooms + '';
         var guests = advert.offer.guests + '';
 
+        var advertFeatures = advert.offer.features.filter(function (feature) {
+          return fields.features.indexOf(feature) !== -1;
+        });
+
         if (fields.type !== 'any' && advert.offer.type !== fields.type) {
           return false;
         }
@@ -110,6 +114,10 @@
         }
 
         if (minPrice && advert.offer.price < minPrice) {
+          return false;
+        }
+
+        if (fields.features.length > 0 && advertFeatures.length !== fields.features.length) {
           return false;
         }
 
