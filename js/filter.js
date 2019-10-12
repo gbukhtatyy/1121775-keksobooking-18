@@ -24,11 +24,11 @@
     });
   };
 
-  var fieldChangeHadnler = function () {
+  var fieldChangeHadnler = window.debounce(function () {
     saveFilterValues();
 
     window.main.renderMapPins();
-  };
+  });
 
   fieldHousingType.addEventListener('change', fieldChangeHadnler);
   fieldHousingPrice.addEventListener('change', fieldChangeHadnler);
