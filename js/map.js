@@ -2,11 +2,12 @@
 
 (function () {
 
-  var MAP_LOCATION_Y_MIN = 130;
-  var MAP_LOCATION_Y_MAX = 630;
   var MAP_PIN_MAIN_WIDTH = 65;
   var MAP_PIN_MAIN_ROUND_HEIGHT = 65;
-  var MAP_PIN_MAIN_HEIGHT = 65 + 16;
+  var MAP_PIN_MAIN_HEIGHT = 81; // 65 + 16 = 81, 16 высота указателя
+
+  var MAP_LOCATION_Y_MIN = 49; // 130 - MAP_PIN_MAIN_HEIGHT = 49
+  var MAP_LOCATION_Y_MAX = 549; // 630 - MAP_PIN_MAIN_HEIGHT = 549
 
   var mapContainer = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -15,6 +16,7 @@
 
   var closeCardClickHandler = function (card) {
     return function () {
+      card.querySelector('.popup__close').removeEventListener('click', closeCardClickHandler(card));
       card.remove();
       removeActivePin();
     };
@@ -84,14 +86,8 @@
      */
     getMapBounds: function () {
       return {
-        x: {
-          min: -(MAP_PIN_MAIN_WIDTH / 2),
-          max: parseInt(mapContainer.clientWidth, 10) - (MAP_PIN_MAIN_WIDTH / 2)
-        },
-        y: {
-          min: MAP_LOCATION_Y_MIN,
-          max: MAP_LOCATION_Y_MAX
-        }
+        min: new window.Coordinate(-(MAP_PIN_MAIN_WIDTH / 2), MAP_LOCATION_Y_MIN),
+        max: new window.Coordinate(parseInt(mapContainer.clientWidth, 10) - (MAP_PIN_MAIN_WIDTH / 2), MAP_LOCATION_Y_MAX)
       };
     },
 

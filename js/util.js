@@ -31,27 +31,13 @@
     },
 
     initializationMove: function (element, elementTrigger, bounds, elementMoveHandler) {
-      var minX = false;
-      var maxX = false;
-      var minY = false;
-      var maxY = false;
-
-      if (bounds.x) {
-        minX = bounds.x.min;
-        maxX = bounds.x.max;
-      }
-      if (bounds.y) {
-        minY = bounds.y.min;
-        maxY = bounds.y.max;
-      }
+      var minCoordinate = bounds.min;
+      var maxCoordinate = bounds.max;
 
       elementTrigger.addEventListener('mousedown', function (evt) {
         evt.preventDefault();
 
-        var startCoords = {
-          x: evt.clientX,
-          y: evt.clientY
-        };
+        var startCoords = new window.Coordinate(evt.clientX, evt.clientY);
 
         var dragged = false;
 
@@ -59,26 +45,22 @@
           moveEvt.preventDefault();
           dragged = true;
 
-          var shift = {
-            x: startCoords.x - moveEvt.clientX,
-            y: startCoords.y - moveEvt.clientY
-          };
+          var shiftCoordinate = new window.Coordinate(startCoords.x, startCoords.y);
+          shiftCoordinate.sub(new window.Coordinate(moveEvt.clientX, moveEvt.clientY));
 
-          startCoords = {
-            x: moveEvt.clientX,
-            y: moveEvt.clientY
-          };
+          startCoords = new window.Coordinate(moveEvt.clientX, moveEvt.clientY);
 
-          shift.y = element.offsetTop - shift.y;
-          shift.x = element.offsetLeft - shift.x;
+          var offsetCoordinate = new window.Coordinate(element.offsetLeft, element.offsetTop);
 
-          shift.x = minX !== false && shift.x < minX ? minX : shift.x;
-          shift.x = maxX !== false && shift.x > maxX ? maxX : shift.x;
-          shift.y = minY !== false && shift.y < minY ? minY : shift.y;
-          shift.y = maxY !== false && shift.y > maxY ? maxY : shift.y;
+          offsetCoordinate.sub(shiftCoordinate);
 
-          element.style.top = shift.y + 'px';
-          element.style.left = shift.x + 'px';
+          offsetCoordinate.x = minCoordinate.x !== false && offsetCoordinate.x < minCoordinate.x ? minCoordinate.x : offsetCoordinate.x;
+          offsetCoordinate.x = maxCoordinate.x !== false && offsetCoordinate.x > maxCoordinate.x ? maxCoordinate.x : offsetCoordinate.x;
+          offsetCoordinate.y = minCoordinate.y !== false && offsetCoordinate.y < minCoordinate.y ? minCoordinate.y : offsetCoordinate.y;
+          offsetCoordinate.y = maxCoordinate.y !== false && offsetCoordinate.y > maxCoordinate.y ? maxCoordinate.y : offsetCoordinate.y;
+
+          element.style.top = offsetCoordinate.y + 'px';
+          element.style.left = offsetCoordinate.x + 'px';
 
           if (elementMoveHandler) {
             elementMoveHandler();
