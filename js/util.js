@@ -48,7 +48,7 @@
           var shiftCoordinate = new window.Coordinate(startCoords.x, startCoords.y);
           shiftCoordinate.sub(new window.Coordinate(moveEvt.clientX, moveEvt.clientY));
 
-          startCoords = new window.Coordinate(moveEvt.clientX, moveEvt.clientY);
+          startCoords.fill(moveEvt.clientX, moveEvt.clientY);
 
           var offsetCoordinate = new window.Coordinate(element.offsetLeft, element.offsetTop);
 

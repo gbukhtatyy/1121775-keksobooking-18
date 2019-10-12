@@ -18,4 +18,9 @@
     this.x = this.x - cordinate.x;
     this.y = this.y - cordinate.y;
   };
+
+  window.Coordinate.prototype.fill = function (x, y) {
+    this.x = x;
+    this.y = y;
+  };
 })();
