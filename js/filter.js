@@ -22,12 +22,18 @@
     });
   };
 
-  fieldHousingType.addEventListener('change', saveFilterValues);
-  fieldHousingPrice.addEventListener('change', saveFilterValues);
-  fieldHousingRooms.addEventListener('change', saveFilterValues);
-  fieldHousingGuests.addEventListener('change', saveFilterValues);
+  var fieldChangeHadnler = function () {
+    saveFilterValues();
+
+    window.main.renderMapPins();
+  };
+
+  fieldHousingType.addEventListener('change', fieldChangeHadnler);
+  fieldHousingPrice.addEventListener('change', fieldChangeHadnler);
+  fieldHousingRooms.addEventListener('change', fieldChangeHadnler);
+  fieldHousingGuests.addEventListener('change', fieldChangeHadnler);
   [].map.call(fieldFeatures.querySelectorAll('[name=features]'), function (element) {
-    element.addEventListener('change', saveFilterValues);
+    element.addEventListener('change', fieldChangeHadnler);
   });
 
   window.filter = {
@@ -52,6 +58,23 @@
       this.clear();
 
       window.form.changeDisabledFormElements(form, true);
+    },
+
+    /**
+     * Применение фильтраций к объявлениям
+     * @param {Array} adverts список объявлений
+     * @return {Array} список обхявлений удовлетворяющим фильтрам
+     */
+    apply: function (adverts) {
+      var fields = window.filter.fields;
+
+      return adverts.filter(function (advert) {
+        if (fields.type !== 'any' && advert.offer.type !== fields.type) {
+          return false;
+        }
+
+        return true;
+      });
     },
 
     /**

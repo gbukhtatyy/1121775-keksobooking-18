@@ -26,13 +26,12 @@
     /**
      * Создание разметки маркера объявления для отображения на карте
      * @param {Object} advert объект объявления
-     * @param {Number} index идентификатор объявления
      * @return {Object} разметка маркера объявления
      */
-    create: function (advert, index) {
+    create: function (advert) {
       var pin = template.cloneNode(true);
 
-      pin.setAttribute('data-id', index);
+      pin.setAttribute('data-id', advert.id);
 
       fillPin(pin, advert);
 

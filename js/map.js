@@ -125,7 +125,7 @@
       var fragmentPins = document.createDocumentFragment();
 
       for (var i = 0; i < Math.min(adverts.length, MAP_ADVERT_AMOUNT); i++) {
-        fragmentPins.appendChild(window.pin.create(adverts[i], i));
+        fragmentPins.appendChild(window.pin.create(adverts[i]));
       }
 
       mapPinsContainer.appendChild(fragmentPins);
