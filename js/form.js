@@ -78,8 +78,9 @@
   // Выставление стилей для контейнера фотографий
   containerImages.style.backgroundColor = 'transparent';
   containerImages.style.display = 'flex';
-  containerImages.style.width = '300px';
-  containerImages.style.flexWrap = 'wrap'; /**/
+  containerImages.style.width = '320px';
+  containerImages.style.margin = '0px';
+  containerImages.style.flexWrap = 'wrap';
 
   window.upload.init(fieldAvatar, imageAvatar);
   window.upload.initWithCallback(fieldImages, function (file) {
@@ -92,7 +93,7 @@
   });
 
   capacityFieldChangeHandler();
-  priceFieldChangeHandler(); /**/
+  priceFieldChangeHandler();
 
   var formSubmitSuccessHandler = function () {
     window.main.deactive();
