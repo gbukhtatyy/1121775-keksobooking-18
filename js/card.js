@@ -10,8 +10,19 @@
     'bungalo': 'Бунгало'
   };
 
+  var PHOTO_WITH = 45;
+  var PHOTO_HEIGHT = 40;
+
   // Шаблон отображения карточки объявления
   var template = document.querySelector('#card').content.querySelector('article');
+
+  var templateFeature = document.createElement('li');
+  templateFeature.className = 'popup__feature';
+
+  var templatePhoto = document.createElement('img');
+  templatePhoto.className = 'popup__photo';
+  templatePhoto.width = PHOTO_WITH;
+  templatePhoto.height = PHOTO_HEIGHT;
 
   /**
    * Заполнение тэгов объявления
@@ -20,11 +31,17 @@
    */
   var fillAdvertFeatures = function (element, advert) {
     var features = element.querySelector('.popup__features');
-    var featuresContent = '';
+    var featuresContent = document.createDocumentFragment();
+
+    features.innerHTML = '';
+
     advert.offer.features.forEach(function (feature) {
-      featuresContent += '<li class="popup__feature popup__feature--' + feature + '"></li>';
+      var item = templateFeature.cloneNode(true);
+      item.classList.add('popup__feature--' + feature);
+      featuresContent.appendChild(item);
     });
-    features.innerHTML = featuresContent;
+
+    features.appendChild(featuresContent);
   };
 
   /**
@@ -34,11 +51,19 @@
    */
   var fillAdvertPhotos = function (element, advert) {
     var photos = element.querySelector('.popup__photos');
-    var photosContent = '';
+    var photosContent = document.createDocumentFragment();
+
+    photos.innerHTML = '';
+
     advert.offer.photos.forEach(function (photo) {
-      photosContent += '<img src="' + photo + '" class="popup__photo" width="45" height="40" alt="' + advert.offer.title + '"></li>';
+      var item = templatePhoto.cloneNode(true);
+
+      item.src = photo;
+      item.alt = advert.offer.title;
+
+      photosContent.appendChild(item);
     });
-    photos.innerHTML = photosContent;
+    photos.appendChild(photosContent);
   };
 
   /**
