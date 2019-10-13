@@ -25,6 +25,9 @@
     });
 
     window.main.renderMapPins();
+
+    // Включение фильтра на карте
+    window.filter.active();
   };
 
   var advertsLoadErrorHandler = function (message) {
@@ -41,9 +44,6 @@
 
     // Включение формы объявления
     window.form.active();
-
-    // Включение фильтра на карте
-    window.filter.active();
   };
 
   var deactivationPage = function () {

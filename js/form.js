@@ -23,8 +23,9 @@
   var DEFAULT_CAPACITY_SELECTED_INDEX = 0;
   var DEFAULT_ROOM_NUMBER_SELECTED_INDEX = 0;
 
-  var form = document.querySelector('.ad-form');
+  var DEFAULT_URL_SRC = 'img/muffin-grey.svg';
 
+  var form = document.querySelector('.ad-form');
   var fieldTitle = document.querySelector('#title');
   var fieldAddress = document.querySelector('#address');
   var fieldType = document.querySelector('#type');
@@ -35,6 +36,12 @@
   var fieldTimeOut = document.querySelector('#timeout');
   var fieldDescription = document.querySelector('#description');
   var fieldFeatures = document.querySelectorAll('input[name=features]');
+
+  var fieldAvatar = document.querySelector('#avatar');
+  var imageAvatar = document.querySelector('.ad-form-header__preview img');
+
+  var fieldImages = document.querySelector('#images');
+  var containerImages = document.querySelector('.ad-form__photo');
 
   var capacityFieldChangeHandler = function () {
     var roomNumber = fieldRoomNumber.value;
@@ -68,8 +75,25 @@
   fieldTimeOut.addEventListener('change', timeFieldsChangeHandler);
   fieldType.addEventListener('change', priceFieldChangeHandler);
 
+  // Выставление стилей для контейнера фотографий
+  containerImages.style.backgroundColor = 'transparent';
+  containerImages.style.display = 'flex';
+  containerImages.style.width = '320px';
+  containerImages.style.margin = '0px';
+  containerImages.style.flexWrap = 'wrap';
+
+  window.upload.init(fieldAvatar, imageAvatar);
+  window.upload.initWithCallback(fieldImages, function (file) {
+    var image = document.createElement('img');
+
+    image.classList.add('ad-form__photo');
+    image.src = file;
+
+    containerImages.appendChild(image);
+  });
+
   capacityFieldChangeHandler();
-  priceFieldChangeHandler(); /**/
+  priceFieldChangeHandler();
 
   var formSubmitSuccessHandler = function () {
     window.main.deactive();
@@ -91,7 +115,6 @@
   form.addEventListener('submit', formSubmitHandler);
 
   window.form = {
-
     /**
      * Включение/выключение элементов формы
      * @param {Object} element Объект формы в DOM
@@ -137,6 +160,7 @@
      * Сброс значений элементов формы фильтра на карте
      */
     clear: function () {
+
       fieldTitle.value = '';
 
       this.fillAddressField();
@@ -153,6 +177,12 @@
       fieldTimeOut.selectedIndex = 0;
 
       fieldDescription.value = '';
+
+      fieldAvatar.value = '';
+      imageAvatar.src = DEFAULT_URL_SRC;
+
+      fieldImages.value = '';
+      containerImages.innerHTML = '';
 
       fieldFeatures.forEach(function (element) {
         element.checked = false;
