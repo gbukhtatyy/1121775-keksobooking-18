@@ -19,11 +19,14 @@
   };
 
   var advertsLoadSuccessHandler = function (response) {
-    window.main.adverts = response.slice().map(function (advert, index) {
+    window.main.adverts = response.filter(function (advert) {
+      return advert.offer;
+    }).map(function (advert, index) {
       advert.id = index;
       return advert;
     });
 
+    // Отображение маркеров на карте
     window.main.renderMapPins();
 
     // Включение фильтра на карте
